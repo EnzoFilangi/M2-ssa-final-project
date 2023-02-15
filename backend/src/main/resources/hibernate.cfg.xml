@@ -22,8 +22,8 @@
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
 
-        <mapping class="com.ssa.team3.backend.model.persistence.entities.StudentEntity"/>
-        <mapping class="com.ssa.team3.backend.model.persistence.entities.CompanyEntity"/>
-        <mapping class="com.ssa.team3.backend.model.persistence.entities.InternshipEntity"/>
+        <mapping class="com.ssa.team3.backend.model.persistence.student.StudentEntity"/>
+        <mapping class="com.ssa.team3.backend.model.persistence.company.CompanyEntity"/>
+        <mapping class="com.ssa.team3.backend.model.persistence.internship.InternshipEntity"/>
     </session-factory>
 </hibernate-configuration>

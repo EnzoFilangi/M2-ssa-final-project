@@ -1,5 +1,6 @@
-package com.ssa.team3.backend.model.persistence.entities;
+package com.ssa.team3.backend.model.persistence.company;
 
+import com.ssa.team3.backend.model.persistence.internship.InternshipEntity;
 import com.ssa.team3.backend.model.services.company.Company;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
