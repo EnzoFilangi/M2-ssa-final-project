@@ -1,4 +1,4 @@
-package com.ssa.team3.backend;
+package com.ssa.team3.backend.controller;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
