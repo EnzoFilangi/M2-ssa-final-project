@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  postgres:
+    image:
+      postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: iam
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 127.0.0.1:5432:5432
+    volumes:
+      - ./.docker/postgres/iam:/var/lib/postgresql/data
