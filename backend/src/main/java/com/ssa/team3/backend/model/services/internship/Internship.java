@@ -1,4 +1,7 @@
-package com.ssa.team3.backend.model.models;
+package com.ssa.team3.backend.model.services.internship;
+
+import com.ssa.team3.backend.model.services.company.Company;
+import com.ssa.team3.backend.model.services.student.Student;
 
 import java.util.Date;
 import java.util.UUID;
