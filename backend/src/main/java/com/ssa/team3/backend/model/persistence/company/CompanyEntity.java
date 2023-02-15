@@ -27,10 +27,9 @@ public class CompanyEntity {
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private Set<InternshipEntity> internships;
 
-    public CompanyEntity(String name, String address, Set<InternshipEntity> internships) {
+    public CompanyEntity(String name, String address) {
         this.name = name;
         this.address = address;
-        this.internships = internships;
     }
 
     public CompanyEntity() {}

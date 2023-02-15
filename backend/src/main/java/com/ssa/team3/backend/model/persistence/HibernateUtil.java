@@ -1,12 +1,15 @@
 package com.ssa.team3.backend.model.persistence;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-// From : https://docs.jboss.org/hibernate/orm/6.0/quickstart/html_single/
+@ApplicationScoped
 public class HibernateUtil {
+    // From : https://docs.jboss.org/hibernate/orm/6.0/quickstart/html_single/
     //Annotation based configuration
     private static SessionFactory sessionFactory;
 
@@ -21,5 +24,16 @@ public class HibernateUtil {
     public static SessionFactory getSessionFactory() {
         if(sessionFactory == null) sessionFactory = buildSessionAnnotationFactory();
         return sessionFactory;
+    }
+
+    public Session beginTransaction(){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        return session;
+    }
+
+    public void endTransaction(Session session){
+        session.getTransaction().commit();
+        session.close();
     }
 }

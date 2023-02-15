@@ -30,11 +30,10 @@ public class StudentEntity {
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private Set<InternshipEntity> internships;
 
-    public StudentEntity(String firstName, String lastName, String group, Set<InternshipEntity> internships) {
+    public StudentEntity(String firstName, String lastName, String group) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.group = group;
-        this.internships = internships;
     }
 
     public StudentEntity() {}
@@ -70,5 +69,17 @@ public class StudentEntity {
      */
     public Student toModel() {
         return toModel(FetchType.LAZY);
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 }
