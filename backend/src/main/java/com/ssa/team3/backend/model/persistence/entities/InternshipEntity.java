@@ -1,6 +1,6 @@
-package com.ssa.team3.backend.model.entities;
+package com.ssa.team3.backend.model.persistence.entities;
 
-import com.ssa.team3.backend.model.models.Internship;
+import com.ssa.team3.backend.model.services.internship.Internship;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@Table(name = "INTERNSHIPS")
 public class InternshipEntity {
 
     @Id
@@ -42,7 +43,42 @@ public class InternshipEntity {
     private Float noteTech;
     private Float noteCom;
 
+    public InternshipEntity(StudentEntity student, CompanyEntity company, Date startDate, Date endDate, Boolean cahierDesCharges, Boolean ficheVisite, Boolean ficheEvaluationEntreprise, Boolean sondageWeb, Boolean rapportRendu, Boolean soutenance, Boolean visitePlanifiee, Boolean visiteFaite, Float noteTech, Float noteCom) {
+        this.student = student;
+        this.company = company;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.cahierDesCharges = cahierDesCharges;
+        this.ficheVisite = ficheVisite;
+        this.ficheEvaluationEntreprise = ficheEvaluationEntreprise;
+        this.sondageWeb = sondageWeb;
+        this.rapportRendu = rapportRendu;
+        this.soutenance = soutenance;
+        this.visitePlanifiee = visitePlanifiee;
+        this.visiteFaite = visiteFaite;
+        this.noteTech = noteTech;
+        this.noteCom = noteCom;
+    }
+
     public InternshipEntity() {}
+
+    public InternshipEntity(UUID id, StudentEntity student, CompanyEntity company, Date startDate, Date endDate, Boolean cahierDesCharges, Boolean ficheVisite, Boolean ficheEvaluationEntreprise, Boolean sondageWeb, Boolean rapportRendu, Boolean soutenance, Boolean visitePlanifiee, Boolean visiteFaite, Float noteTech, Float noteCom) {
+        this.id = id;
+        this.student = student;
+        this.company = company;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.cahierDesCharges = cahierDesCharges;
+        this.ficheVisite = ficheVisite;
+        this.ficheEvaluationEntreprise = ficheEvaluationEntreprise;
+        this.sondageWeb = sondageWeb;
+        this.rapportRendu = rapportRendu;
+        this.soutenance = soutenance;
+        this.visitePlanifiee = visitePlanifiee;
+        this.visiteFaite = visiteFaite;
+        this.noteTech = noteTech;
+        this.noteCom = noteCom;
+    }
 
     /**
      * Casts this entity to the relevant model

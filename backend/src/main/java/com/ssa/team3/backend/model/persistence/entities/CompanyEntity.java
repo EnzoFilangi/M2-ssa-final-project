@@ -1,6 +1,6 @@
-package com.ssa.team3.backend.model.entities;
+package com.ssa.team3.backend.model.persistence.entities;
 
-import com.ssa.team3.backend.model.models.Company;
+import com.ssa.team3.backend.model.services.company.Company;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -10,6 +10,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Entity
+@Table(name = "COMPANIES")
 public class CompanyEntity {
     @Id
     @GeneratedValue
@@ -25,7 +26,20 @@ public class CompanyEntity {
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     private Set<InternshipEntity> internships;
 
+    public CompanyEntity(String name, String address, Set<InternshipEntity> internships) {
+        this.name = name;
+        this.address = address;
+        this.internships = internships;
+    }
+
     public CompanyEntity() {}
+
+    public CompanyEntity(UUID id, String name, String address, Set<InternshipEntity> internships) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.internships = internships;
+    }
 
     /**
      * Casts this entity to the relevant model
