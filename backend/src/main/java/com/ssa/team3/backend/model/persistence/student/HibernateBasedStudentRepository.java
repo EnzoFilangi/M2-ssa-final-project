@@ -1,6 +1,6 @@
 package com.ssa.team3.backend.model.persistence.student;
 
-import com.ssa.team3.backend.model.services.student.StudentRepository;
+import com.ssa.team3.backend.model.domain.student.StudentRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped

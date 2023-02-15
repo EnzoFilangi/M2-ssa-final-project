@@ -2,7 +2,7 @@ package com.ssa.team3.backend.model.persistence.internship;
 
 import com.ssa.team3.backend.model.persistence.company.CompanyEntity;
 import com.ssa.team3.backend.model.persistence.student.StudentEntity;
-import com.ssa.team3.backend.model.services.internship.Internship;
+import com.ssa.team3.backend.model.domain.internship.Internship;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 

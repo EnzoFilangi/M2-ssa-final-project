@@ -1,6 +1,6 @@
 package com.ssa.team3.backend.model.persistence.company;
 
-import com.ssa.team3.backend.model.services.company.CompanyRepository;
+import com.ssa.team3.backend.model.domain.company.CompanyRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
