@@ -72,16 +72,16 @@ public class HibernateBasedStudentRepository implements StudentRepository {
 
     @Override
     public boolean deleteStudent(UUID id) {
-        boolean foundStudent = false;
         Session session = hibernate.beginTransaction();
 
         StudentEntity studentEntity = session.get(StudentEntity.class, id);
-        if (studentEntity != null){
-            session.remove(studentEntity);
-            foundStudent = true;
+        if (studentEntity == null){
+            hibernate.endTransaction(session);
+            return false;
         }
 
+        session.remove(studentEntity);
         hibernate.endTransaction(session);
-        return foundStudent;
+        return true;
     }
 }

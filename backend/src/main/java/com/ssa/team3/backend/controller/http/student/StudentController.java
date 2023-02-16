@@ -29,30 +29,37 @@ public class StudentController {
     @GET
     @Path("/{id}")
     @Produces(APPLICATION_JSON)
-    public Response getStudent(@PathParam("id") UUID id) {
+    public StudentResponse getStudent(@PathParam("id") UUID id) {
         Optional<StudentResponse> responseDto = studentService.getStudent(id).map(this::toStudentResponse);
-        if (responseDto.isPresent()){
-            return Response.ok(responseDto.get()).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
+        if (responseDto.isEmpty()){
+            throw new NotFoundException();
         }
+        return responseDto.get();
     }
 
     @POST
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    public StudentResponse createStudent(@Valid StudentRequest body){
-        return toStudentResponse(studentService.addStudent(body.getFirstName(), body.getLastName(), body.getGroup()));
+    public Response createStudent(@Valid StudentRequest body) {
+        Student newStudent = studentService.addStudent(body.getFirstName(), body.getLastName(), body.getGroup());
+        return Response.status(Response.Status.CREATED).entity(toStudentResponse(newStudent)).build();
     }
 
     @PUT
     @Path("/{id}")
     @Consumes(APPLICATION_JSON)
-    public Response updateStudent(@PathParam("id") UUID id, @Valid StudentRequest body){
-        if (studentService.updateStudent(id, body.getFirstName(), body.getLastName(), body.getGroup())){
-            return Response.ok().build();
+    public void updateStudent(@PathParam("id") UUID id, @Valid StudentRequest body){
+        if (!studentService.updateStudent(id, body.getFirstName(), body.getLastName(), body.getGroup())){
+            throw new NotFoundException();
         }
-        return Response.status(Response.Status.NOT_FOUND).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void deleteStudent(@PathParam("id") UUID id) {
+        if (!studentService.deleteStudent(id)) {
+            throw new NotFoundException();
+        }
     }
 
 
