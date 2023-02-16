@@ -4,6 +4,7 @@ import com.ssa.team3.backend.model.domain.IAM.Session;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -18,11 +19,16 @@ public class SessionEntity {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "expiry_date", nullable = false)
+    private Date expiryDate;
+
     public SessionEntity() {
     }
 
-    public SessionEntity(UUID userId) {
+    public SessionEntity(UUID userId, Date expiryDate) {
         this.userId = userId;
+        this.expiryDate = expiryDate;
     }
 
     public UUID getId() {
@@ -41,7 +47,15 @@ public class SessionEntity {
         this.userId = userId;
     }
 
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
     public Session toModel(){
-        return new Session(id, userId);
+        return new Session(id, userId, expiryDate);
     }
 }

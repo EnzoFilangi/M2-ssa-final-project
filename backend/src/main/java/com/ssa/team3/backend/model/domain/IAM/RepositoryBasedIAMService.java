@@ -7,6 +7,8 @@ import jakarta.inject.Inject;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -38,7 +40,7 @@ public class RepositoryBasedIAMService implements IAMService {
 
     @Override
     public void logout(UUID sessionId) {
-        sessionRepository.deleteSession(sessionId);
+        removeSession(sessionId);
     }
 
     @Override
@@ -56,8 +58,30 @@ public class RepositoryBasedIAMService implements IAMService {
     }
 
     @Override
+    public void renewSession(UUID sessionId) {
+        Optional<Session> sessionOptional = sessionRepository.getSession(sessionId);
+        if (sessionOptional.isEmpty()){
+            return;
+        }
+
+        // From : https://stackoverflow.com/a/1005550
+        Date currentDate = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(currentDate);
+        c.add(Calendar.DATE, 1);
+        Date newExpiryDate = c.getTime();
+
+        sessionRepository.setSessionExpiryDate(sessionId, newExpiryDate);
+    }
+
+    @Override
     public Optional<Session> getSession(UUID sessionId) {
         return sessionRepository.getSession(sessionId);
+    }
+
+    @Override
+    public void removeSession(UUID sessionId) {
+        sessionRepository.deleteSession(sessionId);
     }
 
     @Override

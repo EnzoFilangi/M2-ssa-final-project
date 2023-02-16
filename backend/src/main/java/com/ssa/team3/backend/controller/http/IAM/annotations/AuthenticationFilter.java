@@ -13,6 +13,7 @@ import jakarta.ws.rs.core.SecurityContext;
 import jakarta.ws.rs.ext.Provider;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,13 +34,19 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             return;
         }
 
-        Optional<Session> currentSession = getSession(sessionCookie);
-        if (currentSession.isEmpty()){
+        Optional<Session> sessionOptional = getSession(sessionCookie);
+        if (sessionOptional.isEmpty()){
             abortWithUnauthorized(requestContext);
             return;
         }
+        Session currentSession = sessionOptional.get();
 
-        injectSession(requestContext, currentSession.get());
+        if (isSessionValid(currentSession)){
+            injectSession(requestContext, currentSession);
+        } else {
+            iamService.removeSession(currentSession.getId());
+            abortWithUnauthorized(requestContext);
+        }
     }
 
     private void abortWithUnauthorized(ContainerRequestContext requestContext) {
@@ -48,6 +55,10 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
     private Optional<Session> getSession(Cookie sessionCookie) {
         return iamService.getSession(UUID.fromString(sessionCookie.getValue()));
+    }
+
+    private boolean isSessionValid(Session currentSession) {
+        return currentSession.getExpiryDate().after(new Date());
     }
 
     private void injectSession(ContainerRequestContext requestContext, Session session) {

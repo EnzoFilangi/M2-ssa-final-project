@@ -13,7 +13,11 @@ public interface IAMService {
 
     void register(String username, String password, String firstName, String lastName) throws UserAlreadyExistsException, InvalidCredentialsException;
 
+    void renewSession(UUID sessionId);
+
     Optional<Session> getSession(UUID sessionId);
+
+    void removeSession(UUID sessionId);
 
     Optional<User> getUser(UUID userId);
 }
