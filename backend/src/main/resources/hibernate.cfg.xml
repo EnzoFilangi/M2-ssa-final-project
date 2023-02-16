@@ -25,5 +25,7 @@
         <mapping class="com.ssa.team3.backend.model.persistence.student.StudentEntity"/>
         <mapping class="com.ssa.team3.backend.model.persistence.company.CompanyEntity"/>
         <mapping class="com.ssa.team3.backend.model.persistence.internship.InternshipEntity"/>
+        <mapping class="com.ssa.team3.backend.model.persistence.IAM.UserEntity"/>
+        <mapping class="com.ssa.team3.backend.model.persistence.IAM.SessionEntity"/>
     </session-factory>
 </hibernate-configuration>
