@@ -59,4 +59,9 @@ public class RepositoryBasedIAMService implements IAMService {
     public Optional<Session> getSession(UUID sessionId) {
         return sessionRepository.getSession(sessionId);
     }
+
+    @Override
+    public Optional<User> getUser(UUID userId) {
+        return userRepository.getUserById(userId);
+    }
 }

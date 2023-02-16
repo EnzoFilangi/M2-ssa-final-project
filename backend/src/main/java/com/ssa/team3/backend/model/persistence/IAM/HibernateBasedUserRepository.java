@@ -8,10 +8,22 @@ import jakarta.inject.Inject;
 import org.hibernate.Session;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @ApplicationScoped
 public class HibernateBasedUserRepository implements UserRepository {
     @Inject HibernateUtil hibernate;
+
+    @Override
+    public Optional<User> getUserById(UUID userId) {
+        Session session = hibernate.beginTransaction();
+
+        UserEntity userEntity = session.get(UserEntity.class, userId);
+
+        hibernate.endTransaction(session);
+
+        return Optional.ofNullable(userEntity).map(UserEntity::toModel);
+    }
 
     @Override
     public Optional<User> getUserByUsername(String username) {

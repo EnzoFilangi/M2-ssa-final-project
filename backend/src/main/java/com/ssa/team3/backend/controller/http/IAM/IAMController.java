@@ -3,8 +3,10 @@ package com.ssa.team3.backend.controller.http.IAM;
 import com.ssa.team3.backend.controller.http.IAM.annotations.Secured;
 import com.ssa.team3.backend.controller.http.IAM.dto.request.LoginRequest;
 import com.ssa.team3.backend.controller.http.IAM.dto.request.RegisterRequest;
+import com.ssa.team3.backend.controller.http.IAM.dto.response.UserInfoResponse;
 import com.ssa.team3.backend.model.domain.IAM.IAMService;
 import com.ssa.team3.backend.model.domain.IAM.Session;
+import com.ssa.team3.backend.model.domain.IAM.User;
 import com.ssa.team3.backend.model.domain.IAM.exceptions.InvalidCredentialsException;
 import com.ssa.team3.backend.model.domain.IAM.exceptions.UserAlreadyExistsException;
 import jakarta.inject.Inject;
@@ -12,6 +14,7 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -62,6 +65,19 @@ public class IAMController {
         }
     }
 
+    @GET
+    @Path("/session")
+    @Secured
+    @Produces(APPLICATION_JSON)
+    public UserInfoResponse loggedInUserInfo(@Context SecurityContext securityContext){
+        UUID userId = UUID.fromString(securityContext.getUserPrincipal().getName());
+        Optional<UserInfoResponse> responseDto = iamService.getUser(userId).map(this::toUserInfoResponse);
+        if (responseDto.isEmpty()){
+            throw new NotFoundException();
+        }
+        return responseDto.get();
+    }
+
     /**
      * Creates a cookie named "sessionId" storing the sessionId with the following parameters :
      * <ul>
@@ -74,5 +90,9 @@ public class IAMController {
      */
     private NewCookie createSessionCookie(String sessionId){
         return new NewCookie("sessionId", sessionId, "/", "", "", 60*60*24, true, true);
+    }
+
+    private UserInfoResponse toUserInfoResponse(User user){
+        return new UserInfoResponse(user);
     }
 }
