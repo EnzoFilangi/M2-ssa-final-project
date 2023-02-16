@@ -57,6 +57,6 @@ public class IAMController {
      * </ul>
      */
     private NewCookie createSessionCookie(String sessionId){
-        return new NewCookie("sessionId", sessionId, "/", "", "comment", 60*60*24, true, true);
+        return new NewCookie("sessionId", sessionId, "/", "", "", 60*60*24, true, true);
     }
 }
