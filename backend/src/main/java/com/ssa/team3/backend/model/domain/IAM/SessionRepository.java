@@ -6,4 +6,5 @@ import java.util.UUID;
 public interface SessionRepository {
     Optional<Session> getSession(UUID sessionId);
     Session insertSession(UUID userId);
+    void deleteSession(UUID sessionId);
 }

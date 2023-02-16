@@ -9,6 +9,8 @@ import java.util.UUID;
 public interface IAMService {
     Session login(String username, String password) throws InvalidCredentialsException;
 
+    void logout(UUID sessionId);
+
     void register(String username, String password) throws UserAlreadyExistsException, InvalidCredentialsException;
 
     Optional<Session> getSession(UUID sessionId);

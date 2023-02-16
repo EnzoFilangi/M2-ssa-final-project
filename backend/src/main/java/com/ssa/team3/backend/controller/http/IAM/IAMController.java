@@ -1,5 +1,6 @@
 package com.ssa.team3.backend.controller.http.IAM;
 
+import com.ssa.team3.backend.controller.http.IAM.annotations.Secured;
 import com.ssa.team3.backend.controller.http.IAM.dto.request.LoginRequest;
 import com.ssa.team3.backend.model.domain.IAM.IAMService;
 import com.ssa.team3.backend.model.domain.IAM.Session;
@@ -9,6 +10,8 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
+
+import java.util.UUID;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -30,6 +33,17 @@ public class IAMController {
             return Response.status(Response.Status.CREATED).cookie(sessionCookie).build();
         } catch (InvalidCredentialsException e){
             return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @DELETE
+    @Path("/session")
+    @Secured
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    public void logout(@CookieParam("sessionId") Cookie cookie){
+        if (cookie != null){
+            iamService.logout(UUID.fromString(cookie.getValue()));
         }
     }
 

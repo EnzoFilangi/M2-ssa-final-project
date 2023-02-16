@@ -37,6 +37,11 @@ public class RepositoryBasedIAMService implements IAMService {
     }
 
     @Override
+    public void logout(UUID sessionId) {
+        sessionRepository.deleteSession(sessionId);
+    }
+
+    @Override
     public void register(String username, String password) throws UserAlreadyExistsException, InvalidCredentialsException {
         Optional<User> userOptional = userRepository.getUserByUsername(username);
         if (userOptional.isPresent()){

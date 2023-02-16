@@ -35,4 +35,14 @@ public class HibernateBasedSessionRepository implements SessionRepository {
 
         return sessionEntity.toModel();
     }
+
+    @Override
+    public void deleteSession(UUID sessionId) {
+        org.hibernate.Session hibernateSession = hibernate.beginTransaction();
+
+        SessionEntity sessionEntity = hibernateSession.get(SessionEntity.class, sessionId);
+        hibernateSession.remove(sessionEntity);
+
+        hibernate.endTransaction(hibernateSession);
+    }
 }
