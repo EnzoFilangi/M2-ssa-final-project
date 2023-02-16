@@ -1,5 +1,7 @@
 package com.ssa.team3.backend.model.domain.IAM;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Session {
@@ -17,5 +19,11 @@ public class Session {
 
     public UUID getUserId() {
         return userId;
+    }
+
+    public List<String> getRoles() {
+        return new ArrayList<>(){{
+            this.add("User");
+        }};
     }
 }

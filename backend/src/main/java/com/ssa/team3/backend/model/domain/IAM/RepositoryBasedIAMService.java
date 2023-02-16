@@ -8,6 +8,7 @@ import jakarta.inject.Inject;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Optional;
+import java.util.UUID;
 
 @ApplicationScoped
 public class RepositoryBasedIAMService implements IAMService {
@@ -47,5 +48,10 @@ public class RepositoryBasedIAMService implements IAMService {
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new InvalidCredentialsException();
         }
+    }
+
+    @Override
+    public Optional<Session> getSession(UUID sessionId) {
+        return sessionRepository.getSession(sessionId);
     }
 }

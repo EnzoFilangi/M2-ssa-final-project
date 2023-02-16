@@ -12,6 +12,7 @@ import jakarta.ws.rs.core.*;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
+// Most of the structure for the authentication implementation comes from : https://stackoverflow.com/a/26778123
 @Path("/authentication")
 public class IAMController {
     @Inject
