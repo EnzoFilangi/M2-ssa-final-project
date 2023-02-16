@@ -4,6 +4,7 @@ import com.ssa.team3.backend.controller.http.student.dto.request.StudentRequest;
 import com.ssa.team3.backend.controller.http.student.dto.response.StudentResponse;
 import com.ssa.team3.backend.model.domain.student.Student;
 import com.ssa.team3.backend.model.domain.student.StudentService;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/students")
+@RequestScoped
 public class StudentController {
     @Inject StudentService studentService;
 
