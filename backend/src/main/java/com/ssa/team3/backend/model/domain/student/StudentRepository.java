@@ -8,6 +8,6 @@ public interface StudentRepository {
     Optional<Student> getStudentById(UUID id);
     List<Student> getAllStudents();
     Student insertStudent(String firstName, String lastName, String group);
-    void updateStudent(UUID id, String firstName, String lastName, String group);
+    boolean updateStudent(UUID id, String firstName, String lastName, String group);
     boolean deleteStudent(UUID id);
 }

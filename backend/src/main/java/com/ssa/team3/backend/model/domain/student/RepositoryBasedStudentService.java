@@ -27,8 +27,8 @@ public class RepositoryBasedStudentService implements StudentService {
     }
 
     @Override
-    public void updateStudent(UUID id, String firstName, String lastName, String group) {
-        studentRepository.updateStudent(id, firstName, lastName, group);
+    public boolean updateStudent(UUID id, String firstName, String lastName, String group) {
+        return studentRepository.updateStudent(id, firstName, lastName, group);
     }
 
     @Override

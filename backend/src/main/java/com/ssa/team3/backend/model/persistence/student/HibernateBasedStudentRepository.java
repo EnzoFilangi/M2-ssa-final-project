@@ -51,24 +51,23 @@ public class HibernateBasedStudentRepository implements StudentRepository {
     }
 
     @Override
-    public void updateStudent(UUID id, String firstName, String lastName, String group) {
+    public boolean updateStudent(UUID id, String firstName, String lastName, String group) {
         Session session = hibernate.beginTransaction();
 
         StudentEntity studentEntity = session.get(StudentEntity.class, id);
-        session.evict(studentEntity);
+        if (studentEntity == null){
+            hibernate.endTransaction(session);
+            return false;
+        }
 
-        if (firstName != null){
-            studentEntity.setFirstName(firstName);
-        }
-        if (lastName != null){
-            studentEntity.setLastName(lastName);
-        }
-        if (group != null){
-            studentEntity.setGroup(group);
-        }
+        session.evict(studentEntity);
+        studentEntity.setFirstName(firstName);
+        studentEntity.setLastName(lastName);
+        studentEntity.setGroup(group);
         session.merge(studentEntity);
 
         hibernate.endTransaction(session);
+        return true;
     }
 
     @Override
