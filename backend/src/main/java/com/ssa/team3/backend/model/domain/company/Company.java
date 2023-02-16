@@ -2,20 +2,19 @@ package com.ssa.team3.backend.model.domain.company;
 
 import com.ssa.team3.backend.model.domain.internship.Internship;
 
-import java.util.Set;
 import java.util.UUID;
 
 public class Company {
     private final UUID id;
     private final String name;
     private final String address;
-    private final Set<Internship> internships;
+    private final Internship internship;
 
-    public Company(UUID id, String name, String address, Set<Internship> internships) {
+    public Company(UUID id, String name, String address, Internship internship) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.internships = internships;
+        this.internship = internship;
     }
 
     public UUID getId() {
@@ -30,7 +29,7 @@ public class Company {
         return address;
     }
 
-    public Set<Internship> getInternships() {
-        return internships;
+    public Internship getInternship() {
+        return internship;
     }
 }

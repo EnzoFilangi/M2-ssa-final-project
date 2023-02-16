@@ -12,6 +12,8 @@ public class Internship {
     private final Company company;
     private final Date startDate;
     private final Date endDate;
+
+    // We use french terms here as these are business terms
     private final Boolean cahierDesCharges;
     private final Boolean ficheVisite;
     private final Boolean ficheEvaluationEntreprise;

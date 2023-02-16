@@ -22,7 +22,7 @@ public class InternshipEntity {
     @JoinColumn(name = "student_id", nullable = false)
     private StudentEntity student;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id", nullable = false)
     private CompanyEntity company;
 
@@ -34,6 +34,7 @@ public class InternshipEntity {
     @Column(name = "end_date", nullable = false)
     private Date endDate;
 
+    // We use french terms here as these are business terms
     private Boolean cahierDesCharges;
     private Boolean ficheVisite;
     private Boolean ficheEvaluationEntreprise;

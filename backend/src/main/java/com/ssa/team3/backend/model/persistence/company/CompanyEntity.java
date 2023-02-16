@@ -5,10 +5,7 @@ import com.ssa.team3.backend.model.domain.company.Company;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "COMPANIES")
@@ -24,8 +21,9 @@ public class CompanyEntity {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
-    private Set<InternshipEntity> internships;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "internship_id", nullable = false)
+    private InternshipEntity internship;
 
     public CompanyEntity(String name, String address) {
         this.name = name;
@@ -34,11 +32,11 @@ public class CompanyEntity {
 
     public CompanyEntity() {}
 
-    public CompanyEntity(UUID id, String name, String address, Set<InternshipEntity> internships) {
+    public CompanyEntity(UUID id, String name, String address, InternshipEntity internship) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.internships = internships;
+        this.internship = internship;
     }
 
     /**
@@ -51,10 +49,10 @@ public class CompanyEntity {
     public Company toModel(jakarta.persistence.FetchType fetchType){
         switch (fetchType){
             case EAGER:
-                return new Company(id, name, address, internships.stream().map(internship -> internship.toModel(FetchType.LAZY)).collect(Collectors.toSet()));
+                return new Company(id, name, address, internship.toModel(FetchType.LAZY));
             case LAZY:
             default:
-                return new Company(id, name, address, new HashSet<>());
+                return new Company(id, name, address, null);
         }
     }
 
