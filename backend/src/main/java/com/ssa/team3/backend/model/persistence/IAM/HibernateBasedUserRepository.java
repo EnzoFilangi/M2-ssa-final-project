@@ -25,10 +25,10 @@ public class HibernateBasedUserRepository implements UserRepository {
     }
 
     @Override
-    public void insertUser(String username, String hash) {
+    public void insertUser(String username, String hash, String firstName, String lastName) {
         Session session = hibernate.beginTransaction();
 
-        UserEntity userEntity = new UserEntity(username, hash);
+        UserEntity userEntity = new UserEntity(username, hash, firstName, lastName);
         session.persist(userEntity);
 
         hibernate.endTransaction(session);

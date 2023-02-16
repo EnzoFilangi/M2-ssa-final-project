@@ -11,7 +11,7 @@ public interface IAMService {
 
     void logout(UUID sessionId);
 
-    void register(String username, String password) throws UserAlreadyExistsException, InvalidCredentialsException;
+    void register(String username, String password, String firstName, String lastName) throws UserAlreadyExistsException, InvalidCredentialsException;
 
     Optional<Session> getSession(UUID sessionId);
 }

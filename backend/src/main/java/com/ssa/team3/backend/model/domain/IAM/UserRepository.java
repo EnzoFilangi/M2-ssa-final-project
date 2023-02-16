@@ -5,5 +5,5 @@ import java.util.Optional;
 public interface UserRepository {
     Optional<User> getUserByUsername(String username);
 
-    void insertUser(String username, String hash);
+    void insertUser(String username, String hash, String firstName, String lastName);
 }

@@ -20,12 +20,20 @@ public class UserEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
+
     public UserEntity() {
     }
 
-    public UserEntity(String username, String password) {
+    public UserEntity(String username, String password, String firstName, String lastName) {
         this.username = username;
         this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public UUID getId() {
@@ -52,7 +60,23 @@ public class UserEntity {
         this.password = password;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public User toModel(){
-        return new User(id, username, password);
+        return new User(id, username, password, firstName, lastName);
     }
 }

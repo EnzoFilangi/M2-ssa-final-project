@@ -2,6 +2,7 @@ package com.ssa.team3.backend.controller.http.IAM;
 
 import com.ssa.team3.backend.controller.http.IAM.annotations.Secured;
 import com.ssa.team3.backend.controller.http.IAM.dto.request.LoginRequest;
+import com.ssa.team3.backend.controller.http.IAM.dto.request.RegisterRequest;
 import com.ssa.team3.backend.model.domain.IAM.IAMService;
 import com.ssa.team3.backend.model.domain.IAM.Session;
 import com.ssa.team3.backend.model.domain.IAM.exceptions.InvalidCredentialsException;
@@ -51,9 +52,9 @@ public class IAMController {
     @Path("/user")
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    public Response register(@Valid LoginRequest body){
+    public Response register(@Valid RegisterRequest body){
         try {
-            iamService.register(body.getUsername(), body.getPassword());
+            iamService.register(body.getUsername(), body.getPassword(), body.getFirstName(), body.getLastName());
 
             return Response.status(Response.Status.CREATED).build();
         } catch (UserAlreadyExistsException | InvalidCredentialsException e){

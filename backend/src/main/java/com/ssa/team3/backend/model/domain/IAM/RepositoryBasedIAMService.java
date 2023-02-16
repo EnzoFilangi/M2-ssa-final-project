@@ -42,14 +42,14 @@ public class RepositoryBasedIAMService implements IAMService {
     }
 
     @Override
-    public void register(String username, String password) throws UserAlreadyExistsException, InvalidCredentialsException {
+    public void register(String username, String password, String firstName, String lastName) throws UserAlreadyExistsException, InvalidCredentialsException {
         Optional<User> userOptional = userRepository.getUserByUsername(username);
         if (userOptional.isPresent()){
             throw new UserAlreadyExistsException();
         }
 
         try {
-            userRepository.insertUser(username, PasswordHashUtils.createHash(password));
+            userRepository.insertUser(username, PasswordHashUtils.createHash(password), firstName, lastName);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new InvalidCredentialsException();
         }
