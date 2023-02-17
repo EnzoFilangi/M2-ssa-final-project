@@ -12,9 +12,13 @@ import jakarta.inject.Inject;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * This class implements the part of the @Secured annotation that happens after the request.
+ * It renews the session cookie and increases the expiry date of the session in the DB.
+ */
 @Secured
 @Provider
-public class RenewSessionFilter implements ContainerResponseFilter {
+public class SecuredAfterRequest implements ContainerResponseFilter {
     @Inject IAMService iamService;
 
     @Override

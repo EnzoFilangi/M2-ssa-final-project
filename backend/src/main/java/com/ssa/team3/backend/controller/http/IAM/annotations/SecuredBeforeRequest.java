@@ -18,10 +18,15 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * This class implements the part of the @Secured annotation that happens before the request.
+ * It checks the session cookie sent with each request, and aborts the request if it is invalid.
+ * It also handles the session lifecycle in case it has expired.
+ */
 @Secured
 @Provider
 @Priority(Priorities.AUTHENTICATION)
-public class AuthenticationFilter implements ContainerRequestFilter {
+public class SecuredBeforeRequest implements ContainerRequestFilter {
     @Inject IAMService iamService;
 
     @Override
