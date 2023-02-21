@@ -51,6 +51,19 @@ public class IAMController {
         }
     }
 
+    @GET
+    @Path("/session")
+    @Secured
+    @Produces(APPLICATION_JSON)
+    public UserInfoResponse loggedInUserInfo(@Context SecurityContext securityContext){
+        UUID userId = UUID.fromString(securityContext.getUserPrincipal().getName());
+        Optional<UserInfoResponse> responseDto = iamService.getUser(userId).map(this::toUserInfoResponse);
+        if (responseDto.isEmpty()){
+            throw new NotFoundException();
+        }
+        return responseDto.get();
+    }
+
     @POST
     @Path("/user")
     @Consumes(APPLICATION_JSON)
@@ -63,19 +76,6 @@ public class IAMController {
         } catch (UserAlreadyExistsException | InvalidCredentialsException e){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-    }
-
-    @GET
-    @Path("/session")
-    @Secured
-    @Produces(APPLICATION_JSON)
-    public UserInfoResponse loggedInUserInfo(@Context SecurityContext securityContext){
-        UUID userId = UUID.fromString(securityContext.getUserPrincipal().getName());
-        Optional<UserInfoResponse> responseDto = iamService.getUser(userId).map(this::toUserInfoResponse);
-        if (responseDto.isEmpty()){
-            throw new NotFoundException();
-        }
-        return responseDto.get();
     }
 
     /**
