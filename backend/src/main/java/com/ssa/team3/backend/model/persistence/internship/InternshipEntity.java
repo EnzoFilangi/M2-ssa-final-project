@@ -83,6 +83,126 @@ public class InternshipEntity {
         this.noteCom = noteCom;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public StudentEntity getStudent() {
+        return student;
+    }
+
+    public void setStudent(StudentEntity student) {
+        this.student = student;
+    }
+
+    public CompanyEntity getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyEntity company) {
+        this.company = company;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Boolean getCahierDesCharges() {
+        return cahierDesCharges;
+    }
+
+    public void setCahierDesCharges(Boolean cahierDesCharges) {
+        this.cahierDesCharges = cahierDesCharges;
+    }
+
+    public Boolean getFicheVisite() {
+        return ficheVisite;
+    }
+
+    public void setFicheVisite(Boolean ficheVisite) {
+        this.ficheVisite = ficheVisite;
+    }
+
+    public Boolean getFicheEvaluationEntreprise() {
+        return ficheEvaluationEntreprise;
+    }
+
+    public void setFicheEvaluationEntreprise(Boolean ficheEvaluationEntreprise) {
+        this.ficheEvaluationEntreprise = ficheEvaluationEntreprise;
+    }
+
+    public Boolean getSondageWeb() {
+        return sondageWeb;
+    }
+
+    public void setSondageWeb(Boolean sondageWeb) {
+        this.sondageWeb = sondageWeb;
+    }
+
+    public Boolean getRapportRendu() {
+        return rapportRendu;
+    }
+
+    public void setRapportRendu(Boolean rapportRendu) {
+        this.rapportRendu = rapportRendu;
+    }
+
+    public Boolean getSoutenance() {
+        return soutenance;
+    }
+
+    public void setSoutenance(Boolean soutenance) {
+        this.soutenance = soutenance;
+    }
+
+    public Boolean getVisitePlanifiee() {
+        return visitePlanifiee;
+    }
+
+    public void setVisitePlanifiee(Boolean visitePlanifiee) {
+        this.visitePlanifiee = visitePlanifiee;
+    }
+
+    public Boolean getVisiteFaite() {
+        return visiteFaite;
+    }
+
+    public void setVisiteFaite(Boolean visiteFaite) {
+        this.visiteFaite = visiteFaite;
+    }
+
+    public Float getNoteTech() {
+        return noteTech;
+    }
+
+    public void setNoteTech(Float noteTech) {
+        this.noteTech = noteTech;
+    }
+
+    public Float getNoteCom() {
+        return noteCom;
+    }
+
+    public void setNoteCom(Float noteCom) {
+        this.noteCom = noteCom;
+    }
+
     /**
      * Casts this entity to the relevant model
      *
