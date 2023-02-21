@@ -12,27 +12,27 @@ public class RepositoryBasedStudentService implements StudentService {
     @Inject StudentRepository studentRepository;
 
     @Override
-    public List<Student> getStudents() {
-        return studentRepository.getAllStudents();
+    public List<Student> getStudents(UUID tutorId) {
+        return studentRepository.getAllStudentsByTutor(tutorId);
     }
 
     @Override
-    public Optional<Student> getStudent(UUID id) {
-        return studentRepository.getStudentById(id);
+    public Optional<Student> getStudent(UUID tutorId, UUID id) {
+        return studentRepository.getStudentByTutorById(tutorId, id);
     }
 
     @Override
-    public Student addStudent(String firstName, String lastName, String group) {
-        return studentRepository.insertStudent(firstName, lastName, group);
+    public Optional<Student> addStudent(UUID tutorId, String firstName, String lastName, String group) {
+        return studentRepository.insertStudentByTutor(tutorId, firstName, lastName, group);
     }
 
     @Override
-    public boolean updateStudent(UUID id, String firstName, String lastName, String group) {
-        return studentRepository.updateStudent(id, firstName, lastName, group);
+    public boolean updateStudent(UUID tutorId, UUID id, String firstName, String lastName, String group) {
+        return studentRepository.updateStudentByTutor(tutorId, id, firstName, lastName, group);
     }
 
     @Override
-    public boolean deleteStudent(UUID id) {
-        return studentRepository.deleteStudent(id);
+    public boolean deleteStudent(UUID tutorId, UUID id) {
+        return studentRepository.deleteStudentByTutor(tutorId, id);
     }
 }

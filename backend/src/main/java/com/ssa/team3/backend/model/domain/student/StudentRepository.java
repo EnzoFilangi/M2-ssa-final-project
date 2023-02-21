@@ -5,9 +5,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface StudentRepository {
-    Optional<Student> getStudentById(UUID id);
-    List<Student> getAllStudents();
-    Student insertStudent(String firstName, String lastName, String group);
-    boolean updateStudent(UUID id, String firstName, String lastName, String group);
-    boolean deleteStudent(UUID id);
+    Optional<Student> getStudentByTutorById(UUID tutorId, UUID id);
+    List<Student> getAllStudentsByTutor(UUID tutorId);
+    Optional<Student> insertStudentByTutor(UUID tutorId, String firstName, String lastName, String group);
+    boolean updateStudentByTutor(UUID tutorId, UUID id, String firstName, String lastName, String group);
+    boolean deleteStudentByTutor(UUID tutorId, UUID id);
 }

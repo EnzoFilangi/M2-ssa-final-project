@@ -3,8 +3,10 @@ package com.ssa.team3.backend.model.persistence.student;
 import com.ssa.team3.backend.model.domain.student.Student;
 import com.ssa.team3.backend.model.domain.student.StudentRepository;
 import com.ssa.team3.backend.model.persistence.HibernateUtil;
+import com.ssa.team3.backend.model.persistence.IAM.UserEntity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -17,21 +19,26 @@ public class HibernateBasedStudentRepository implements StudentRepository {
     @Inject HibernateUtil hibernate;
 
     @Override
-    public Optional<Student> getStudentById(UUID id) {
+    public Optional<Student> getStudentByTutorById(UUID tutorId, UUID id) {
         Session session = hibernate.beginTransaction();
 
         StudentEntity studentEntity = session.get(StudentEntity.class, id);
+        if (studentEntity == null || !studentEntity.getTutor().getId().equals(tutorId)) {
+            hibernate.endTransaction(session);
+            return Optional.empty();
+        }
 
         hibernate.endTransaction(session);
-
-        return Optional.ofNullable(studentEntity).map(StudentEntity::toModel);
+        return Optional.of(studentEntity).map(StudentEntity::toModel);
     }
 
     @Override
-    public List<Student> getAllStudents() {
+    public List<Student> getAllStudentsByTutor(UUID tutorId) {
         Session session = hibernate.beginTransaction();
 
-        List<StudentEntity> students = session.createQuery("select s from StudentEntity s", StudentEntity.class).getResultList();
+        TypedQuery<StudentEntity> query = session.createQuery("select s from StudentEntity s where s.tutor.id = :tutorId", StudentEntity.class);
+        query.setParameter("tutorId", tutorId);
+        List<StudentEntity> students = query.getResultList();
 
         hibernate.endTransaction(session);
 
@@ -39,23 +46,28 @@ public class HibernateBasedStudentRepository implements StudentRepository {
     }
 
     @Override
-    public Student insertStudent(String firstName, String lastName, String group) {
+    public Optional<Student> insertStudentByTutor(UUID tutorId, String firstName, String lastName, String group) {
         Session session = hibernate.beginTransaction();
 
-        StudentEntity studentEntity = new StudentEntity(firstName, lastName, group);
+        UserEntity tutor = session.get(UserEntity.class, tutorId);
+        if (tutor == null){
+            hibernate.endTransaction(session);
+            return Optional.empty();
+        }
+        StudentEntity studentEntity = new StudentEntity(firstName, lastName, group, tutor);
         session.persist(studentEntity);
 
         hibernate.endTransaction(session);
 
-        return studentEntity.toModel();
+        return Optional.of(studentEntity).map(StudentEntity::toModel);
     }
 
     @Override
-    public boolean updateStudent(UUID id, String firstName, String lastName, String group) {
+    public boolean updateStudentByTutor(UUID tutorId, UUID id, String firstName, String lastName, String group) {
         Session session = hibernate.beginTransaction();
 
         StudentEntity studentEntity = session.get(StudentEntity.class, id);
-        if (studentEntity == null){
+        if (studentEntity == null || !studentEntity.getTutor().getId().equals(tutorId)){
             hibernate.endTransaction(session);
             return false;
         }
@@ -71,11 +83,11 @@ public class HibernateBasedStudentRepository implements StudentRepository {
     }
 
     @Override
-    public boolean deleteStudent(UUID id) {
+    public boolean deleteStudentByTutor(UUID tutorId, UUID id) {
         Session session = hibernate.beginTransaction();
 
         StudentEntity studentEntity = session.get(StudentEntity.class, id);
-        if (studentEntity == null){
+        if (studentEntity == null || !studentEntity.getTutor().getId().equals(tutorId)){
             hibernate.endTransaction(session);
             return false;
         }

@@ -5,13 +5,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface StudentService {
-    List<Student> getStudents();
+    List<Student> getStudents(UUID tutorId);
 
-    Optional<Student> getStudent(UUID id);
+    Optional<Student> getStudent(UUID tutorId, UUID id);
 
-    Student addStudent(String firstName, String lastName, String group);
+    Optional<Student> addStudent(UUID tutorId, String firstName, String lastName, String group);
 
-    boolean updateStudent(UUID id, String firstName, String lastName, String group);
+    boolean updateStudent(UUID tutorId, UUID id, String firstName, String lastName, String group);
 
-    boolean deleteStudent(UUID id);
+    boolean deleteStudent(UUID tutorId, UUID id);
 }

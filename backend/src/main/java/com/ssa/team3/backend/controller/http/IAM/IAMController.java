@@ -11,6 +11,7 @@ import com.ssa.team3.backend.model.domain.IAM.exceptions.InvalidCredentialsExcep
 import com.ssa.team3.backend.model.domain.IAM.exceptions.UserAlreadyExistsException;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 
@@ -29,7 +30,7 @@ public class IAMController {
     @Path("/session")
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    public Response login(@Valid LoginRequest body){
+    public Response login(@Valid @NotNull LoginRequest body){
         try {
             Session session = iamService.login(body.getUsername(), body.getPassword());
 
@@ -68,7 +69,7 @@ public class IAMController {
     @Path("/user")
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
-    public Response register(@Valid RegisterRequest body){
+    public Response register(@Valid @NotNull RegisterRequest body){
         try {
             iamService.register(body.getUsername(), body.getPassword(), body.getFirstName(), body.getLastName());
 

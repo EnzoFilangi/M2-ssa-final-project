@@ -1,10 +1,13 @@
 package com.ssa.team3.backend.model.persistence.IAM;
 
 import com.ssa.team3.backend.model.domain.IAM.User;
+import com.ssa.team3.backend.model.persistence.student.StudentEntity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "USERS")
@@ -26,6 +29,9 @@ public class UserEntity {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @OneToMany(mappedBy = "tutor", fetch = FetchType.LAZY)
+    private Set<StudentEntity> students;
+
     public UserEntity() {
     }
 
@@ -38,10 +44,6 @@ public class UserEntity {
 
     public UUID getId() {
         return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -76,7 +78,25 @@ public class UserEntity {
         this.lastName = lastName;
     }
 
+    public Set<StudentEntity> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<StudentEntity> students) {
+        this.students = students;
+    }
+
+    public User toModel(jakarta.persistence.FetchType fetchType) {
+        switch (fetchType){
+            case EAGER:
+                return new User(id, username, password, firstName, lastName, students.stream().map(student -> student.toModel(FetchType.LAZY)).collect(Collectors.toSet()));
+            case LAZY:
+            default:
+                return new User(id, username, password, firstName, lastName, null);
+        }
+    }
+
     public User toModel(){
-        return new User(id, username, password, firstName, lastName);
+        return toModel(FetchType.LAZY);
     }
 }

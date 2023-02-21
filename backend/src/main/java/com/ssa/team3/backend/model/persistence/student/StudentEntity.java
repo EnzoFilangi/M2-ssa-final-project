@@ -1,5 +1,6 @@
 package com.ssa.team3.backend.model.persistence.student;
 
+import com.ssa.team3.backend.model.persistence.IAM.UserEntity;
 import com.ssa.team3.backend.model.persistence.internship.InternshipEntity;
 import com.ssa.team3.backend.model.domain.student.Student;
 import jakarta.persistence.*;
@@ -30,19 +31,25 @@ public class StudentEntity {
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private Set<InternshipEntity> internships;
 
-    public StudentEntity(String firstName, String lastName, String group) {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tutor_id", nullable = false)
+    private UserEntity tutor;
+
+    public StudentEntity(String firstName, String lastName, String group, UserEntity tutor) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.group = group;
+        this.tutor = tutor;
     }
 
     public StudentEntity() {}
 
-    public StudentEntity(UUID id, String firstName, String lastName, String group, Set<InternshipEntity> internships) {
+    public StudentEntity(UUID id, String firstName, String lastName, String group, UserEntity tutor, Set<InternshipEntity> internships) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.group = group;
+        this.tutor = tutor;
         this.internships = internships;
     }
 
@@ -56,10 +63,10 @@ public class StudentEntity {
     public Student toModel(jakarta.persistence.FetchType fetchType) {
         switch (fetchType){
             case EAGER:
-                return new Student(id, firstName, lastName, group, internships.stream().map(internship -> internship.toModel(FetchType.LAZY)).collect(Collectors.toSet()));
+                return new Student(id, firstName, lastName, group, internships.stream().map(internship -> internship.toModel(FetchType.LAZY)).collect(Collectors.toSet()), tutor.toModel());
             case LAZY:
             default:
-                return new Student(id, firstName, lastName, group, new HashSet<>());
+                return new Student(id, firstName, lastName, group, new HashSet<>(), null);
         }
     }
 
@@ -71,15 +78,47 @@ public class StudentEntity {
         return toModel(FetchType.LAZY);
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    public String getGroup() {
+        return group;
+    }
+
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    public Set<InternshipEntity> getInternships() {
+        return internships;
+    }
+
+    public void setInternships(Set<InternshipEntity> internships) {
+        this.internships = internships;
+    }
+
+    public UserEntity getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(UserEntity tutor) {
+        this.tutor = tutor;
     }
 }
