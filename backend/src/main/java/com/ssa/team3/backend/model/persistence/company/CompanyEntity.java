@@ -21,8 +21,7 @@ public class CompanyEntity {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "internship_id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "company")
     private InternshipEntity internship;
 
     public CompanyEntity(String name, String address) {
@@ -36,6 +35,38 @@ public class CompanyEntity {
         this.id = id;
         this.name = name;
         this.address = address;
+        this.internship = internship;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public InternshipEntity getInternship() {
+        return internship;
+    }
+
+    public void setInternship(InternshipEntity internship) {
         this.internship = internship;
     }
 

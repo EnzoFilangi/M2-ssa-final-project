@@ -63,7 +63,7 @@ public class InternshipController {
         );
 
         if (newInternship.isEmpty()){
-            return Response.status(Response.Status.UNAUTHORIZED).build();
+            return Response.status(Response.Status.FORBIDDEN).build();
         }
         return Response.status(Response.Status.CREATED).entity(toInternshipResponse(newInternship.get())).build();
     }

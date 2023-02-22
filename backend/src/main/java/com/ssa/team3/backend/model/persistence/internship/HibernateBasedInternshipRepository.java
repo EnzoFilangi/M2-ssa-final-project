@@ -7,6 +7,7 @@ import com.ssa.team3.backend.model.persistence.company.CompanyEntity;
 import com.ssa.team3.backend.model.persistence.student.StudentEntity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.FetchType;
 import org.hibernate.Session;
 
 import java.util.Date;
@@ -28,7 +29,7 @@ public class HibernateBasedInternshipRepository implements InternshipRepository 
         }
 
         hibernate.endTransaction(session);
-        return Optional.of(internshipEntity).map(InternshipEntity::toModel);
+        return Optional.of(internshipEntity).map(entity -> entity.toModel(FetchType.EAGER));
     }
 
     @Override
@@ -36,12 +37,12 @@ public class HibernateBasedInternshipRepository implements InternshipRepository 
         Session session = hibernate.beginTransaction();
 
         StudentEntity student = session.get(StudentEntity.class, studentId);
-        if (student == null){
+        if (student == null || !student.getTutor().getId().equals(tutorId)){ // Refuse non existent student, or student that isn't owned by this tutor
             hibernate.endTransaction(session);
             return Optional.empty();
         }
         CompanyEntity company = session.get(CompanyEntity.class, companyId);
-        if (company == null){
+        if (company == null || company.getInternship() != null){ // Refuse non existent companies, or companies that are already attributed
             hibernate.endTransaction(session);
             return Optional.empty();
         }
@@ -49,7 +50,7 @@ public class HibernateBasedInternshipRepository implements InternshipRepository 
         session.persist(internshipEntity);
 
         hibernate.endTransaction(session);
-        return Optional.of(internshipEntity).map(InternshipEntity::toModel);
+        return Optional.of(internshipEntity).map(entity -> entity.toModel(FetchType.EAGER));
     }
 
     @Override

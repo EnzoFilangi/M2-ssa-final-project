@@ -74,7 +74,7 @@ public class StudentController {
         Optional<Student> newStudent = studentService.addStudent(userId, body.getFirstName(), body.getLastName(), body.getGroup());
 
         if (newStudent.isEmpty()){
-            return Response.status(Response.Status.UNAUTHORIZED).build();
+            return Response.status(Response.Status.FORBIDDEN).build();
         }
         return Response.status(Response.Status.CREATED).entity(toStudentResponse(newStudent.get())).build();
     }

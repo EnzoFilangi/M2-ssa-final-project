@@ -1,6 +1,6 @@
 package com.ssa.team3.backend.controller.http.internship.dto.request;
 
-import com.ssa.team3.backend.controller.http.annotations.UUID.IsUUID;
+import com.ssa.team3.backend.controller.annotations.UUID.IsUUID;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

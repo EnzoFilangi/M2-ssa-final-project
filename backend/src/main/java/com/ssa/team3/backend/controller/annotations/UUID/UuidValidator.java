@@ -1,4 +1,4 @@
-package com.ssa.team3.backend.controller.http.annotations.UUID;
+package com.ssa.team3.backend.controller.annotations.UUID;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
