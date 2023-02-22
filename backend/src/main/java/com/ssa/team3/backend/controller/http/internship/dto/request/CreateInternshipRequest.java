@@ -1,21 +1,23 @@
 package com.ssa.team3.backend.controller.http.internship.dto.request;
 
+import com.ssa.team3.backend.controller.http.annotations.UUID.IsUUID;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.UUID;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
 public class CreateInternshipRequest {
 
-    @NotBlank
-    private String studentId;
+    @IsUUID
+    private UUID studentId;
 
-    @NotBlank
-    private String companyId;
+    @IsUUID
+    private UUID companyId;
 
     @NotBlank
     private String startDate;
@@ -57,11 +59,11 @@ public class CreateInternshipRequest {
     public CreateInternshipRequest() {
     }
 
-    public String getStudentId() {
+    public UUID getStudentId() {
         return studentId;
     }
 
-    public String getCompanyId() {
+    public UUID getCompanyId() {
         return companyId;
     }
 
@@ -113,11 +115,11 @@ public class CreateInternshipRequest {
         return noteCom;
     }
 
-    public void setStudentId(String studentId) {
+    public void setStudentId(UUID studentId) {
         this.studentId = studentId;
     }
 
-    public void setCompanyId(String companyId) {
+    public void setCompanyId(UUID companyId) {
         this.companyId = companyId;
     }
 

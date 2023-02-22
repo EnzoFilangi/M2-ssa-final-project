@@ -32,7 +32,7 @@ public class HibernateBasedInternshipRepository implements InternshipRepository 
     }
 
     @Override
-    public Optional<Internship> insertInternshipByTutor(UUID tutorId, String studentId, String companyId, Date startDate, Date endDate, Boolean cahierDesCharges, Boolean ficheVisite, Boolean ficheEvaluationEntreprise, Boolean sondageWeb, Boolean rapportRendu, Boolean sondageWeb1, Boolean visitePlanifiee, Boolean visiteFaite, Float noteTech, Float noteCom) {
+    public Optional<Internship> insertInternshipByTutor(UUID tutorId, UUID studentId, UUID companyId, Date startDate, Date endDate, Boolean cahierDesCharges, Boolean ficheVisite, Boolean ficheEvaluationEntreprise, Boolean sondageWeb, Boolean rapportRendu, Boolean sondageWeb1, Boolean visitePlanifiee, Boolean visiteFaite, Float noteTech, Float noteCom) {
         Session session = hibernate.beginTransaction();
 
         StudentEntity student = session.get(StudentEntity.class, studentId);

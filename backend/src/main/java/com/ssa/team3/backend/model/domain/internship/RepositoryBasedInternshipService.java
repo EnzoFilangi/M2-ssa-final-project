@@ -17,7 +17,7 @@ public class RepositoryBasedInternshipService implements InternshipService {
     }
 
     @Override
-    public Optional<Internship> addInternship(UUID tutorId, String studentId, String companyId, Date startDate, Date endDate, Boolean cahierDesCharges, Boolean ficheVisite, Boolean ficheEvaluationEntreprise, Boolean sondageWeb, Boolean rapportRendu, Boolean soutenance, Boolean visitePlanifiee, Boolean visiteFaite, Float noteTech, Float noteCom) {
+    public Optional<Internship> addInternship(UUID tutorId, UUID studentId, UUID companyId, Date startDate, Date endDate, Boolean cahierDesCharges, Boolean ficheVisite, Boolean ficheEvaluationEntreprise, Boolean sondageWeb, Boolean rapportRendu, Boolean soutenance, Boolean visitePlanifiee, Boolean visiteFaite, Float noteTech, Float noteCom) {
         return internshipRepository.insertInternshipByTutor(tutorId, studentId, companyId, startDate, endDate, cahierDesCharges, ficheVisite, ficheEvaluationEntreprise, sondageWeb, rapportRendu, sondageWeb, visitePlanifiee, visiteFaite, noteTech, noteCom);
     }
 
