@@ -1,8 +1,10 @@
 package com.ssa.team3.backend.controller.http.student;
 
 import com.ssa.team3.backend.controller.http.IAM.annotations.Secured;
+import com.ssa.team3.backend.controller.http.internship.dto.response.InternshipResponse;
 import com.ssa.team3.backend.controller.http.student.dto.request.StudentRequest;
 import com.ssa.team3.backend.controller.http.student.dto.response.StudentResponse;
+import com.ssa.team3.backend.model.domain.internship.Internship;
 import com.ssa.team3.backend.model.domain.student.Student;
 import com.ssa.team3.backend.model.domain.student.StudentService;
 import jakarta.enterprise.context.RequestScoped;
@@ -16,6 +18,7 @@ import jakarta.ws.rs.core.SecurityContext;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -45,6 +48,21 @@ public class StudentController {
             throw new NotFoundException();
         }
         return responseDto.get();
+    }
+
+    @GET
+    @Path("/{id}/internships")
+    @Secured
+    @Produces(APPLICATION_JSON)
+    public Set<InternshipResponse> getInternshipsForStudent(@PathParam("id") UUID id, @Context SecurityContext securityContext) {
+        UUID userId = UUID.fromString(securityContext.getUserPrincipal().getName());
+
+        Optional<Student> studentOptional = studentService.getStudent(userId, id);
+        if (studentOptional.isEmpty()){
+            throw new NotFoundException();
+        }
+
+        return studentOptional.get().getInternships().stream().map(this::toInternshipResponse).collect(Collectors.toSet());
     }
 
     @POST
@@ -85,5 +103,8 @@ public class StudentController {
 
     private StudentResponse toStudentResponse(Student student) {
         return new StudentResponse(student);
+    }
+    private InternshipResponse toInternshipResponse(Internship internship) {
+        return new InternshipResponse(internship);
     }
 }
