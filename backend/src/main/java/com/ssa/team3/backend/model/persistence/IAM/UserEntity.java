@@ -86,17 +86,14 @@ public class UserEntity {
         this.students = students;
     }
 
-    public User toModel(jakarta.persistence.FetchType fetchType) {
-        switch (fetchType){
-            case EAGER:
-                return new User(id, username, password, firstName, lastName, students.stream().map(student -> student.toModel(FetchType.LAZY)).collect(Collectors.toSet()));
-            case LAZY:
-            default:
-                return new User(id, username, password, firstName, lastName, null);
+    public User toModel(boolean resolveRelations) {
+        if (resolveRelations){
+            return new User(id, username, password, firstName, lastName, students.stream().map(student -> student.toModel(false)).collect(Collectors.toSet()));
         }
+        return new User(id, username, password, firstName, lastName, null);
     }
 
     public User toModel(){
-        return toModel(FetchType.LAZY);
+        return toModel(false);
     }
 }

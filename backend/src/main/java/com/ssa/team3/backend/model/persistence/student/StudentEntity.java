@@ -56,26 +56,20 @@ public class StudentEntity {
     /**
      * Casts this entity to the relevant model
      *
-     * Also casts the relations of this entity if fetchType is EAGER, and ignores them if fetchType is LAZY
-     * @param fetchType
-     * @return
+     * Also casts the relations of this entity if resolveRelations is true
      */
-    public Student toModel(jakarta.persistence.FetchType fetchType) {
-        switch (fetchType){
-            case EAGER:
-                return new Student(id, firstName, lastName, group, internships.stream().map(internship -> internship.toModel(FetchType.LAZY, FetchType.EAGER)).collect(Collectors.toSet()), tutor.toModel());
-            case LAZY:
-            default:
-                return new Student(id, firstName, lastName, group, new HashSet<>(), null);
+    public Student toModel(boolean resolveRelations) {
+        if (resolveRelations) {
+            return new Student(id, firstName, lastName, group, internships.stream().map(internship -> internship.toModel(false, true)).collect(Collectors.toSet()), tutor.toModel());
         }
+        return new Student(id, firstName, lastName, group, new HashSet<>(), null);
     }
 
     /**
      * Casts this entity to the relevant model without casting its relations
-     * @return
      */
     public Student toModel() {
-        return toModel(FetchType.LAZY);
+        return toModel(false);
     }
 
     public UUID getId() {

@@ -73,18 +73,13 @@ public class CompanyEntity {
     /**
      * Casts this entity to the relevant model
      *
-     * Also casts the relations of this entity if fetchType is EAGER, and ignores them if fetchType is LAZY
-     * @param fetchType
-     * @return
+     * Also casts the relations of this entity if resolveRelations is true
      */
-    public Company toModel(jakarta.persistence.FetchType fetchType){
-        switch (fetchType){
-            case EAGER:
-                return new Company(id, name, address, internship.toModel(FetchType.LAZY));
-            case LAZY:
-            default:
-                return new Company(id, name, address, null);
+    public Company toModel(boolean resolveRelations){
+        if (resolveRelations){
+            return new Company(id, name, address, internship.toModel(false));
         }
+        return new Company(id, name, address, null);
     }
 
     /**
@@ -92,6 +87,6 @@ public class CompanyEntity {
      * @return
      */
     public Company toModel(){
-        return toModel(FetchType.LAZY);
+        return toModel(false);
     }
 }

@@ -6,7 +6,6 @@ import com.ssa.team3.backend.model.persistence.HibernateUtil;
 import com.ssa.team3.backend.model.persistence.company.CompanyEntity;
 import com.ssa.team3.backend.model.persistence.student.StudentEntity;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.persistence.FetchType;
 import org.hibernate.Session;
 
 import java.util.Date;
@@ -26,7 +25,7 @@ public class HibernateBasedInternshipRepository implements InternshipRepository 
         }
 
         HibernateUtil.endTransaction(session);
-        return Optional.of(internshipEntity).map(entity -> entity.toModel(FetchType.EAGER));
+        return Optional.of(internshipEntity).map(entity -> entity.toModel(true));
     }
 
     @Override
@@ -47,7 +46,7 @@ public class HibernateBasedInternshipRepository implements InternshipRepository 
         session.persist(internshipEntity);
 
         HibernateUtil.endTransaction(session);
-        return Optional.of(internshipEntity).map(entity -> entity.toModel(FetchType.EAGER));
+        return Optional.of(internshipEntity).map(entity -> entity.toModel(true));
     }
 
     @Override

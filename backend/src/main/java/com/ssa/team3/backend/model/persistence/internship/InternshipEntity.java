@@ -208,27 +208,26 @@ public class InternshipEntity {
     /**
      * Casts this entity to the relevant model
      *
-     * Also casts the relations of this entity if fetchType is EAGER, and ignores them if fetchType is LAZY
+     * Also casts the respective relations of this entity if resolveStudentRelation or resolveCompanyRelation is true
      */
-    public Internship toModel(jakarta.persistence.FetchType studentFetchType, jakarta.persistence.FetchType companyFetchType){
-        Student student = studentFetchType == FetchType.EAGER ? this.student.toModel(FetchType.LAZY) : null;
-        Company company = companyFetchType == FetchType.EAGER ? this.company.toModel(FetchType.LAZY) : null;
+    public Internship toModel(boolean resolveStudentRelation, boolean resolveCompanyRelation){
+        Student student = resolveStudentRelation ? this.student.toModel(false) : null;
+        Company company = resolveCompanyRelation ? this.company.toModel(false) : null;
 
         return new Internship(id, student, company, startDate, endDate, cahierDesCharges, ficheVisite, ficheEvaluationEntreprise, sondageWeb, rapportRendu, soutenance, visitePlanifiee, visiteFaite, noteTech, noteCom);
     }
 
     /**
-     * Method for backwards compatibility that calls toModel(studentFetchType, companyFetchType) by duplicating its argument
+     * Method for backwards compatibility that calls toModel(resolveStudentRelation, resolveCompanyRelation) by duplicating its argument
      */
-    public Internship toModel(jakarta.persistence.FetchType fetchType){
-        return toModel(fetchType, fetchType);
+    public Internship toModel(boolean resolveRelations){
+        return toModel(resolveRelations, resolveRelations);
     }
 
     /**
      * Casts this entity to the relevant model without casting its relations
-     * @return
      */
     public Internship toModel(){
-        return toModel(FetchType.LAZY, FetchType.LAZY);
+        return toModel(false, false);
     }
 }
