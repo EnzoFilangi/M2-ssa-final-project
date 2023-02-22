@@ -14,7 +14,6 @@ import jakarta.ws.rs.ext.Provider;
 
 import java.security.Principal;
 import java.util.Date;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,25 +30,10 @@ public class SecuredBeforeRequest implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
-        Map<String, Cookie> cookies = requestContext.getCookies();
-
-        Cookie sessionCookie = cookies.get("sessionId");
-        if (sessionCookie == null) {
-            abortWithUnauthorized(requestContext);
-            return;
-        }
-
-        Optional<Session> sessionOptional = getSession(sessionCookie);
-        if (sessionOptional.isEmpty()){
-            abortWithUnauthorized(requestContext);
-            return;
-        }
-        Session currentSession = sessionOptional.get();
-
-        if (isSessionValid(currentSession)){
-            injectSession(requestContext, currentSession);
-        } else {
-            iamService.removeSession(currentSession.getId());
+        try {
+            Session currentSession = getSession(requestContext);
+            tryInjectSession(requestContext, currentSession);
+        } catch(InvalidSessionException e) {
             abortWithUnauthorized(requestContext);
         }
     }
@@ -58,8 +42,31 @@ public class SecuredBeforeRequest implements ContainerRequestFilter {
         requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
     }
 
-    private Optional<Session> getSession(Cookie sessionCookie) {
-        return iamService.getSession(UUID.fromString(sessionCookie.getValue()));
+    private Session getSession(ContainerRequestContext requestContext) throws InvalidSessionException {
+        Cookie sessionCookie = getSessionCookie(requestContext);
+        Optional<Session> sessionOptional = iamService.getSession(UUID.fromString(sessionCookie.getValue()));
+        if (sessionOptional.isEmpty()){
+            throw new InvalidSessionException();
+        }
+        return sessionOptional.get();
+    }
+
+    private Cookie getSessionCookie(ContainerRequestContext requestContext) throws InvalidSessionException {
+        Cookie sessionCookie = requestContext.getCookies().get("sessionId");
+        if (sessionCookie == null) {
+            throw new InvalidSessionException();
+        }
+        return sessionCookie;
+    }
+
+    private void tryInjectSession(ContainerRequestContext requestContext, Session currentSession) throws InvalidSessionException {
+        // If the session is valid, inject it in the current request. Otherwise delete it from the DB and reject the request.
+        if (isSessionValid(currentSession)){
+            injectSession(requestContext, currentSession);
+        } else {
+            iamService.removeSession(currentSession.getId());
+            throw new InvalidSessionException();
+        }
     }
 
     private boolean isSessionValid(Session currentSession) {
