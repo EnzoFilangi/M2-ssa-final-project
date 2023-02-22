@@ -19,6 +19,7 @@ public class CreateInternshipRequest {
     @IsUUID
     private UUID companyId;
 
+    // Use strings for date since JEE doesn't seem to like parsing ISO 8601 dates from the JSON
     @NotBlank
     private String startDate;
 
@@ -68,10 +69,12 @@ public class CreateInternshipRequest {
     }
 
     public Date getStartDate() {
+        // Convert the ISO 8601 string to a java Date so the usage is transparent for the rest of the app
         return Date.from(LocalDate.parse(startDate, ISO_LOCAL_DATE).atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     public Date getEndDate() {
+        // Convert the ISO 8601 string to a java Date so the usage is transparent for the rest of the app
         return Date.from(LocalDate.parse(endDate, ISO_LOCAL_DATE).atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
