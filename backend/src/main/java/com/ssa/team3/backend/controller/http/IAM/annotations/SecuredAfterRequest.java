@@ -9,12 +9,11 @@ import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.ext.Provider;
 import jakarta.inject.Inject;
 
-import java.util.Map;
 import java.util.UUID;
 
 /**
  * This class implements the part of the @Secured annotation that happens after the request.
- * It renews the session cookie and increases the expiry date of the session in the DB.
+ * If the session cookie exists, it renews it and increases the expiry date of the session in the DB.
  */
 @Secured
 @Provider
@@ -23,13 +22,22 @@ public class SecuredAfterRequest implements ContainerResponseFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
-        Map<String, Cookie> cookies = requestContext.getCookies();
-
-        Cookie sessionCookie = cookies.get("sessionId");
+        Cookie sessionCookie = getSessionCookie(requestContext);
         if (sessionCookie == null) {
             return;
         }
 
+        extendSession(responseContext, sessionCookie);
+    }
+
+    private Cookie getSessionCookie(ContainerRequestContext requestContext) {
+        return requestContext.getCookies().get("sessionId");
+    }
+
+    /**
+     * Extends the session by extending the cookie's expiration date and increasing the duration of the session in the DB
+     */
+    private void extendSession(ContainerResponseContext responseContext, Cookie sessionCookie) {
         responseContext.getHeaders().add("Set-Cookie", extendCookieDuration(sessionCookie));
         iamService.renewSession(UUID.fromString(sessionCookie.getValue()));
     }
