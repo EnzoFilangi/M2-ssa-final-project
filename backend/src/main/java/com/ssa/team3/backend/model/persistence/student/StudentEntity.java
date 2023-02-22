@@ -63,7 +63,7 @@ public class StudentEntity {
     public Student toModel(jakarta.persistence.FetchType fetchType) {
         switch (fetchType){
             case EAGER:
-                return new Student(id, firstName, lastName, group, internships.stream().map(internship -> internship.toModel(FetchType.LAZY)).collect(Collectors.toSet()), tutor.toModel());
+                return new Student(id, firstName, lastName, group, internships.stream().map(internship -> internship.toModel(FetchType.LAZY, FetchType.EAGER)).collect(Collectors.toSet()), tutor.toModel());
             case LAZY:
             default:
                 return new Student(id, firstName, lastName, group, new HashSet<>(), null);

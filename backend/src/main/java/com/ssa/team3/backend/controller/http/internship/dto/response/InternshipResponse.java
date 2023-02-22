@@ -28,8 +28,9 @@ public class InternshipResponse {
 
     public InternshipResponse(Internship internship){
         this.id = internship.getId();
-        this.student = new StudentResponse(internship.getStudent());
-        this.company = new CompanyResponse(internship.getCompany());
+        // Check that the fields are present before trying to serialize them
+        this.student = internship.getStudent() == null ? null : new StudentResponse(internship.getStudent());
+        this.company = internship.getCompany() == null ? null : new CompanyResponse(internship.getCompany());
         this.startDate = internship.getStartDate();
         this.endDate = internship.getEndDate();
         this.cahierDesCharges = internship.getCahierDesCharges();

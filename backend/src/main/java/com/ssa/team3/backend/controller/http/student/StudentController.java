@@ -57,12 +57,9 @@ public class StudentController {
     public Set<InternshipResponse> getInternshipsForStudent(@PathParam("id") UUID id, @Context SecurityContext securityContext) {
         UUID userId = UUID.fromString(securityContext.getUserPrincipal().getName());
 
-        Optional<Student> studentOptional = studentService.getStudent(userId, id);
-        if (studentOptional.isEmpty()){
-            throw new NotFoundException();
-        }
+        Set<Internship> internships = studentService.getInternshipsForStudent(userId, id);
 
-        return studentOptional.get().getInternships().stream().map(this::toInternshipResponse).collect(Collectors.toSet());
+        return internships.stream().map(this::toInternshipResponse).collect(Collectors.toSet());
     }
 
     @POST

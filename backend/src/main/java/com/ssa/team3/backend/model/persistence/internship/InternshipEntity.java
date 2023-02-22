@@ -1,5 +1,7 @@
 package com.ssa.team3.backend.model.persistence.internship;
 
+import com.ssa.team3.backend.model.domain.company.Company;
+import com.ssa.team3.backend.model.domain.student.Student;
 import com.ssa.team3.backend.model.persistence.company.CompanyEntity;
 import com.ssa.team3.backend.model.persistence.student.StudentEntity;
 import com.ssa.team3.backend.model.domain.internship.Internship;
@@ -207,17 +209,19 @@ public class InternshipEntity {
      * Casts this entity to the relevant model
      *
      * Also casts the relations of this entity if fetchType is EAGER, and ignores them if fetchType is LAZY
-     * @param fetchType
-     * @return
+     */
+    public Internship toModel(jakarta.persistence.FetchType studentFetchType, jakarta.persistence.FetchType companyFetchType){
+        Student student = studentFetchType == FetchType.EAGER ? this.student.toModel(FetchType.LAZY) : null;
+        Company company = companyFetchType == FetchType.EAGER ? this.company.toModel(FetchType.LAZY) : null;
+
+        return new Internship(id, student, company, startDate, endDate, cahierDesCharges, ficheVisite, ficheEvaluationEntreprise, sondageWeb, rapportRendu, soutenance, visitePlanifiee, visiteFaite, noteTech, noteCom);
+    }
+
+    /**
+     * Method for backwards compatibility that calls toModel(studentFetchType, companyFetchType) by duplicating its argument
      */
     public Internship toModel(jakarta.persistence.FetchType fetchType){
-        switch (fetchType){
-            case EAGER:
-                return new Internship(id, student.toModel(FetchType.LAZY), company.toModel(FetchType.LAZY), startDate, endDate, cahierDesCharges, ficheVisite, ficheEvaluationEntreprise, sondageWeb, rapportRendu, soutenance, visitePlanifiee, visiteFaite, noteTech, noteCom);
-            case LAZY:
-            default:
-                return new Internship(id, null, null, startDate, endDate, cahierDesCharges, ficheVisite, ficheEvaluationEntreprise, sondageWeb, rapportRendu, soutenance, visitePlanifiee, visiteFaite, noteTech, noteCom);
-        }
+        return toModel(fetchType, fetchType);
     }
 
     /**
@@ -225,6 +229,6 @@ public class InternshipEntity {
      * @return
      */
     public Internship toModel(){
-        return toModel(FetchType.LAZY);
+        return toModel(FetchType.LAZY, FetchType.LAZY);
     }
 }

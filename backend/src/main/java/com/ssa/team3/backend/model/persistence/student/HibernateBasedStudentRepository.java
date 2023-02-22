@@ -5,6 +5,7 @@ import com.ssa.team3.backend.model.domain.student.StudentRepository;
 import com.ssa.team3.backend.model.persistence.HibernateUtil;
 import com.ssa.team3.backend.model.persistence.IAM.UserEntity;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 
@@ -15,8 +16,8 @@ import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class HibernateBasedStudentRepository implements StudentRepository {
-    @Override
-    public Optional<Student> getStudentByTutorById(UUID tutorId, UUID id) {
+
+    private Optional<Student> getStudentByTutorById(UUID tutorId, UUID id, FetchType fetchType){
         Session session = HibernateUtil.beginTransaction();
 
         StudentEntity studentEntity = session.get(StudentEntity.class, id);
@@ -25,8 +26,19 @@ public class HibernateBasedStudentRepository implements StudentRepository {
             return Optional.empty();
         }
 
+        Optional<Student> toReturn = Optional.of(studentEntity).map(entity -> entity.toModel(fetchType));
         HibernateUtil.endTransaction(session);
-        return Optional.of(studentEntity).map(StudentEntity::toModel);
+        return toReturn;
+    }
+
+    @Override
+    public Optional<Student> getStudentByTutorById(UUID tutorId, UUID id) {
+        return getStudentByTutorById(tutorId, id, FetchType.LAZY);
+    }
+
+    @Override
+    public Optional<Student> getStudentByTutorByIdWithRelations(UUID tutorId, UUID id) {
+        return getStudentByTutorById(tutorId, id, FetchType.EAGER);
     }
 
     @Override

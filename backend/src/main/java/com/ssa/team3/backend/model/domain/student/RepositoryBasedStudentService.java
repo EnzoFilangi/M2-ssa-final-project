@@ -1,5 +1,6 @@
 package com.ssa.team3.backend.model.domain.student;
 
+import com.ssa.team3.backend.model.domain.internship.Internship;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -32,5 +33,11 @@ public class RepositoryBasedStudentService implements StudentService {
     @Override
     public boolean deleteStudent(UUID tutorId, UUID id) {
         return studentRepository.deleteStudentByTutor(tutorId, id);
+    }
+
+    @Override
+    public Set<Internship> getInternshipsForStudent(UUID tutorId, UUID id) {
+        Optional<Student> studentOptional = studentRepository.getStudentByTutorByIdWithRelations(tutorId, id);
+        return studentOptional.map(Student::getInternships).orElse(new HashSet<>());
     }
 }
