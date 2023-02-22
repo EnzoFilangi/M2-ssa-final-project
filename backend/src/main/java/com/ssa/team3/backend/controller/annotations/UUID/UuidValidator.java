@@ -5,6 +5,9 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.UUID;
 
+/**
+ * This class is the implementation of the validator for the constraint IsUUID
+ */
 public class UuidValidator implements ConstraintValidator<IsUUID, UUID> {
 
     @Override
