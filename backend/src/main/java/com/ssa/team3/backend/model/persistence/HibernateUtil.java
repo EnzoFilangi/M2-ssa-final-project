@@ -10,7 +10,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 @ApplicationScoped
 public class HibernateUtil {
     // From : https://docs.jboss.org/hibernate/orm/6.0/quickstart/html_single/
-    //Annotation based configuration
+    // Annotation based configuration
     private static SessionFactory sessionFactory;
 
     private static SessionFactory buildSessionAnnotationFactory() {
@@ -21,18 +21,18 @@ public class HibernateUtil {
         return new MetadataSources( registry ).buildMetadata().buildSessionFactory();
     }
 
-    public static SessionFactory getSessionFactory() {
+    private static SessionFactory getSessionFactory() {
         if(sessionFactory == null) sessionFactory = buildSessionAnnotationFactory();
         return sessionFactory;
     }
 
-    public Session beginTransaction(){
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    public static Session beginTransaction(){
+        Session session = getSessionFactory().getCurrentSession();
         session.beginTransaction();
         return session;
     }
 
-    public void endTransaction(Session session){
+    public static void endTransaction(Session session){
         session.getTransaction().commit();
         session.close();
     }
