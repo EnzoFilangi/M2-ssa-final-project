@@ -6,6 +6,7 @@ import com.ssa.team3.backend.model.persistence.HibernateUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -29,7 +30,9 @@ public class HibernateBasedUserRepository implements UserRepository {
     public Optional<User> getUserByUsername(String username) {
         Session session = hibernate.beginTransaction();
 
-        UserEntity userEntity = session.createQuery("select user from UserEntity user where user.username = username", UserEntity.class).getSingleResultOrNull();
+        Query<UserEntity> query = session.createQuery("select user from UserEntity user where user.username = :username", UserEntity.class);
+        query.setParameter("username", username);
+        UserEntity userEntity = query.getSingleResultOrNull();
 
         hibernate.endTransaction(session);
 
