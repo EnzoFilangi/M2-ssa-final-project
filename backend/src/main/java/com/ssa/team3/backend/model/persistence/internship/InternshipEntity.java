@@ -22,7 +22,7 @@ public class InternshipEntity {
     @JoinColumn(name = "student_id", nullable = false)
     private StudentEntity student;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "company_id", nullable = false)
     private CompanyEntity company;
 
