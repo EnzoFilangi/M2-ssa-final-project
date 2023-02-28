@@ -29,7 +29,7 @@ public class UserEntity {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @OneToMany(mappedBy = "tutor", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tutor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<StudentEntity> students;
 
     public UserEntity() {

@@ -28,7 +28,7 @@ public class StudentEntity {
     @Column(name = "student_group", nullable = false)
     private String group;
 
-    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<InternshipEntity> internships;
 
     @ManyToOne(fetch = FetchType.EAGER)
