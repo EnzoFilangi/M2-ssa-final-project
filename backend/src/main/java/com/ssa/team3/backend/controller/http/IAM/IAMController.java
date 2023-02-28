@@ -34,8 +34,8 @@ public class IAMController {
         try {
             Session session = iamService.login(body.getUsername(), body.getPassword());
 
-            NewCookie sessionCookie = createSessionCookie(session.getId().toString());
-            return Response.status(Response.Status.CREATED).cookie(sessionCookie).build();
+            String sessionCookie = createSessionCookie(session.getId().toString());
+            return Response.status(Response.Status.CREATED).header("Set-Cookie", sessionCookie).build();
         } catch (InvalidCredentialsException e){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
@@ -82,15 +82,14 @@ public class IAMController {
     /**
      * Creates a cookie named "sessionId" storing the sessionId with the following parameters :
      * <ul>
-     * <li>path : "/"
-     * <li>domain : ""
+     * <li>sameSite : None
      * <li>maxAge : 24h
      * <li>secure : true
      * <li>httpOnly : true
      * </ul>
      */
-    private NewCookie createSessionCookie(String sessionId){
-        return new NewCookie("sessionId", sessionId, "/", "", "", 60*60*24, true, true);
+    private String createSessionCookie(String sessionId){
+        return "sessionId=" + sessionId + ";SameSite=None;Max-Age=86400;Secure;HttpOnly";
     }
 
     private UserInfoResponse toUserInfoResponse(User user){

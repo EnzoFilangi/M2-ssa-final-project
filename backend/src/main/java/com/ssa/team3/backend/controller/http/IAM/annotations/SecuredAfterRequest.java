@@ -5,7 +5,6 @@ import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
 import jakarta.ws.rs.core.Cookie;
-import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.ext.Provider;
 import jakarta.inject.Inject;
 
@@ -45,7 +44,7 @@ public class SecuredAfterRequest implements ContainerResponseFilter {
     /**
      * Extends the duration of the cookie by 24h
      */
-    private NewCookie extendCookieDuration(Cookie cookie){
-        return new NewCookie(cookie.getName(), cookie.getValue(), "/", "", "", 60*60*24, true, true);
+    private String extendCookieDuration(Cookie cookie){
+        return cookie.getName() + "=" + cookie.getValue() + ";SameSite=None;Max-Age=86400;Secure;HttpOnly";
     }
 }
