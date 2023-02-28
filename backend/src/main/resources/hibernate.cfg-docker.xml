@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "https://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection properties - Driver, URL, user, password -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://postgres:5432/postgres</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">postgres</property>
+
+        <!-- SQL dialect -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="hibernate.current_session_context_class">thread</property>
+
+        <!-- Ensure the database schema is good on startup -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <mapping class="com.ssa.team3.backend.model.persistence.student.StudentEntity"/>
+        <mapping class="com.ssa.team3.backend.model.persistence.company.CompanyEntity"/>
+        <mapping class="com.ssa.team3.backend.model.persistence.internship.InternshipEntity"/>
+        <mapping class="com.ssa.team3.backend.model.persistence.IAM.UserEntity"/>
+        <mapping class="com.ssa.team3.backend.model.persistence.IAM.SessionEntity"/>
+    </session-factory>
+</hibernate-configuration>
