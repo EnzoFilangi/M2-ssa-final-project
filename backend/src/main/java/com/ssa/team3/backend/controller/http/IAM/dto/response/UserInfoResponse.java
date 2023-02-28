@@ -6,12 +6,12 @@ import java.util.UUID;
 
 public class UserInfoResponse {
     private final UUID id;
-    private final String fistName;
+    private final String firstName;
     private final String lastName;
 
     public UserInfoResponse(User user) {
         this.id = user.getId();
-        this.fistName = user.getFirstName();
+        this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
     }
 
@@ -19,8 +19,8 @@ public class UserInfoResponse {
         return id;
     }
 
-    public String getFistName() {
-        return fistName;
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getLastName() {
