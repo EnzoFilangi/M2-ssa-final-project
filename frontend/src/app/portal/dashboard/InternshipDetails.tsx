@@ -1,6 +1,6 @@
 import Modal from "react-bootstrap/Modal";
 import {useMemo, useRef, useState} from "react";
-import {Company, Internship, NewInternship} from "../../interfaces";
+import {Company} from "../../interfaces";
 
 
 interface AddUserModalProps {
@@ -32,7 +32,7 @@ export function InternshipDetail({hideModal, editCompany, company, deleteInterns
 
     return (<>
             <Modal.Header>
-                <Modal.Title>Ajouter un utilisateur</Modal.Title>
+                <Modal.Title>Détail du stage</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className="flex flex-col">
