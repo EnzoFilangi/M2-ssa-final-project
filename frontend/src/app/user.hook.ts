@@ -145,8 +145,8 @@ export function useUser() {
         })
         if (response.status === 201) {
             const newInternship = await response.json() as NewInternshipResponse;
-            newInternship.startDate = new Date(newInternship.startDate).toISOString().slice(0, 10);
-            newInternship.endDate = new Date(newInternship.endDate).toISOString().slice(0, 10);
+            newInternship.startDate = new Date(newInternship.startDate.replace('[UTC]', '')).toISOString().slice(0, 10);
+            newInternship.endDate = new Date(newInternship.endDate.replace('[UTC]', '')).toISOString().slice(0, 10);
             setStudents((students) => {
                 const newStudents = [...students];
                 const studentIndex = newStudents.findIndex((student) => student.id === newInternship.student.id);
