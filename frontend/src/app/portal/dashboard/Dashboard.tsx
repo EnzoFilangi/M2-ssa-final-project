@@ -110,133 +110,151 @@ export function Dashboard() {
                                                    })
                                                }}/>
                                     </td>
-                                    <td className="px-5">
-                                        <input disabled={!student.internship} type="checkbox"
-                                               checked={student.internship?.cahierDesCharges ?? false}
-                                               onChange={() => {
-                                                   handleEditInternship({
-                                                       ...student.internship as Internship,
-                                                       cahierDesCharges: !student.internship?.cahierDesCharges
-                                                   })
-                                               }}/>
-                                    </td>
-                                    <td className="px-5">
-                                        <input disabled={!student.internship} type="checkbox"
-                                               checked={student.internship?.ficheVisite ?? false}
-                                               onChange={() => {
-                                                   handleEditInternship({
-                                                       ...student.internship as Internship,
-                                                       ficheVisite: !student.internship?.ficheVisite
-                                                   })
-                                               }}/>
-                                    </td>
-                                    <td className="px-5">
-                                        <input disabled={!student.internship} type="checkbox"
-                                               checked={student.internship?.ficheEvaluationEntreprise ?? false}
-                                               onChange={() => {
-                                                   handleEditInternship({
-                                                       ...student.internship as Internship,
-                                                       ficheEvaluationEntreprise: !student.internship?.ficheEvaluationEntreprise
-                                                   })
-                                               }}/>
-                                    </td>
-                                    <td className="px-5">
-                                        <input disabled={!student.internship} type="checkbox"
-                                               checked={student.internship?.sondageWeb ?? false}
-                                               onChange={() => {
-                                                   handleEditInternship({
-                                                       ...student.internship as Internship,
-                                                       sondageWeb: !student.internship?.sondageWeb
-                                                   })
-                                               }}
-                                        />
-                                    </td>
-                                    <td className="px-5">
-                                        <input disabled={!student.internship} type="checkbox"
-                                               checked={student.internship?.rapportRendu ?? false}
-                                               onChange={() => {
-                                                   handleEditInternship({
-                                                       ...student.internship as Internship,
-                                                       rapportRendu: !student.internship?.rapportRendu
-                                                   })
-                                               }}/>
-                                    </td>
-                                    <td className="px-5">
-                                        <input disabled={!student.internship} type="checkbox"
-                                               checked={student.internship?.soutenance ?? false}
-                                               onChange={() => {
-                                                   handleEditInternship({
-                                                       ...student.internship as Internship,
-                                                       soutenance: !student.internship?.soutenance
-                                                   })
-                                               }}/>
-                                    </td>
-                                    <td className="px-5">
-                                        <input disabled={!student.internship} type="checkbox"
-                                               checked={student.internship?.visitePlanifiee ?? false}
-                                               onChange={() => {
-                                                   handleEditInternship({
-                                                       ...student.internship as Internship,
-                                                       visitePlanifiee: !student.internship?.visitePlanifiee
-                                                   })
-                                               }}/>
-                                    </td>
-                                    <td className="px-5">
-                                        <input disabled={!student.internship} type="checkbox"
-                                               checked={student.internship?.visiteFaite ?? false}
-                                               onChange={() => {
-                                                   handleEditInternship({
-                                                       ...student.internship as Internship,
-                                                       visiteFaite: !student.internship?.visiteFaite
-                                                   })
-                                               }}/>
-                                    </td>
-                                    <td className="px-5">
-                                        <input disabled={!student.internship}
-                                               className="bg-gray-50 text border border-gray-300" type="date"
-                                               defaultValue={student.internship?.startDate}
-                                               onChange={(e) => {
-                                                   handleEditInternship({
-                                                       ...student.internship as Internship,
-                                                       startDate: e.target.value
-                                                   })
-                                               }}/>
-                                    </td>
-                                    <td className="px-5">
-                                        <input disabled={!student.internship}
-                                               className="bg-gray-50 text border border-gray-300" type="date"
-                                               defaultValue={student.internship?.endDate}
-                                               onChange={(e) => {
-                                                   handleEditInternship({
-                                                       ...student.internship as Internship,
-                                                       endDate: e.target.value
-                                                   })
-                                               }}/>
-                                    </td>
-                                    <td className="px-5">
-                                        <input disabled={!student.internship}
-                                               className="bg-gray-50 text border border-gray-300" type="number"
-                                               min="0" max="20"
-                                               defaultValue={student.internship?.noteTech}
-                                               onChange={(e) => {
-                                                   handleEditInternship({
-                                                       ...student.internship as Internship,
-                                                       noteTech: Number(e.target.value)
-                                                   })
-                                               }}/>
-                                    </td>
-                                    <td className="px-5">
-                                        <input disabled={!student.internship}
-                                               className="bg-gray-50 text border border-gray-300" type="number"
-                                               min="0" max="20"
-                                               defaultValue={student.internship?.noteCom}
-                                               onChange={(e) => {
-                                                   handleEditInternship({
-                                                       ...student.internship as Internship,
-                                                       noteCom: Number(e.target.value)
-                                                   })
-                                               }}/>
-                                    </td>
+                                    {student.internship ?
+                                        <>
+                                            <td className="px-5">
+                                                <input type="checkbox"
+                                                       checked={student.internship.cahierDesCharges}
+                                                       onChange={() => {
+                                                           handleEditInternship({
+                                                               ...student.internship as Internship,
+                                                               cahierDesCharges: !student.internship?.cahierDesCharges
+                                                           });
+                                                       }}/>
+                                            </td>
+                                            <td className="px-5">
+                                                <input type="checkbox"
+                                                       checked={student.internship.ficheVisite}
+                                                       onChange={() => {
+                                                           handleEditInternship({
+                                                               ...student.internship as Internship,
+                                                               ficheVisite: !student.internship?.ficheVisite
+                                                           });
+                                                       }}/>
+                                            </td>
+                                            <td className="px-5">
+                                                <input type="checkbox"
+                                                       checked={student.internship.ficheEvaluationEntreprise}
+                                                       onChange={() => {
+                                                           handleEditInternship({
+                                                               ...student.internship as Internship,
+                                                               ficheEvaluationEntreprise: !student.internship?.ficheEvaluationEntreprise
+                                                           });
+                                                       }}/>
+                                            </td>
+                                            <td className="px-5">
+                                                <input type="checkbox"
+                                                       checked={student.internship.sondageWeb}
+                                                       onChange={() => {
+                                                           handleEditInternship({
+                                                               ...student.internship as Internship,
+                                                               sondageWeb: !student.internship?.sondageWeb
+                                                           });
+                                                       }}/>
+                                            </td>
+                                            <td className="px-5">
+                                                <input type="checkbox"
+                                                       checked={student.internship.rapportRendu}
+                                                       onChange={() => {
+                                                           handleEditInternship({
+                                                               ...student.internship as Internship,
+                                                               rapportRendu: !student.internship?.rapportRendu
+                                                           });
+                                                       }}/>
+                                            </td>
+                                            <td className="px-5">
+                                                <input type="checkbox"
+                                                       checked={student.internship.soutenance}
+                                                       onChange={() => {
+                                                           handleEditInternship({
+                                                               ...student.internship as Internship,
+                                                               soutenance: !student.internship?.soutenance
+                                                           });
+                                                       }}/>
+                                            </td>
+                                            <td className="px-5">
+                                                <input type="checkbox"
+                                                       checked={student.internship.visitePlanifiee}
+                                                       onChange={() => {
+                                                           handleEditInternship({
+                                                               ...student.internship as Internship,
+                                                               visitePlanifiee: !student.internship?.visitePlanifiee
+                                                           });
+                                                       }}/>
+                                            </td>
+                                            <td className="px-5">
+                                                <input type="checkbox"
+                                                       checked={student.internship.visiteFaite}
+                                                       onChange={() => {
+                                                           handleEditInternship({
+                                                               ...student.internship as Internship,
+                                                               visiteFaite: !student.internship?.visiteFaite
+                                                           });
+                                                       }}/>
+                                            </td>
+                                            <td className="px-5">
+                                                <input
+                                                       className="bg-gray-50 text border border-gray-300" type="date"
+                                                       defaultValue={student.internship.startDate}
+                                                       onChange={(e) => {
+                                                           handleEditInternship({
+                                                               ...student.internship as Internship,
+                                                               startDate: e.target.value
+                                                           });
+                                                       }}/>
+                                            </td>
+                                            <td className="px-5">
+                                                <input
+                                                       className="bg-gray-50 text border border-gray-300" type="date"
+                                                       defaultValue={student.internship.endDate}
+                                                       onChange={(e) => {
+                                                           handleEditInternship({
+                                                               ...student.internship as Internship,
+                                                               endDate: e.target.value
+                                                           });
+                                                       }}/>
+                                            </td>
+                                            <td className="px-5">
+                                                <input
+                                                       className="bg-gray-50 text border border-gray-300" type="number"
+                                                       min="0" max="20"
+                                                       defaultValue={student.internship.noteTech}
+                                                       onChange={(e) => {
+                                                           handleEditInternship({
+                                                               ...student.internship as Internship,
+                                                               noteTech: Number(e.target.value)
+                                                           });
+                                                       }}/>
+                                            </td>
+                                            <td className="px-5">
+                                                <input
+                                                       className="bg-gray-50 text border border-gray-300" type="number"
+                                                       min="0" max="20"
+                                                       defaultValue={student.internship.noteCom}
+                                                       onChange={(e) => {
+                                                           handleEditInternship({
+                                                               ...student.internship as Internship,
+                                                               noteCom: Number(e.target.value)
+                                                           });
+                                                       }}/>
+                                            </td>
+                                        </> :
+                                        <>
+                                            {/* Add empty elements to push the last buttons to the end of the table if there is no internship */}
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </>
+                                    }
                                     <td className="px-5">
                                         <button className="text-red-500"
                                                 onClick={() => deleteStudent(student.id)}>Supprimer étudiant
