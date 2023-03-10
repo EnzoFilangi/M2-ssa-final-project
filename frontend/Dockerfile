@@ -14,7 +14,7 @@ COPY default.nginx /etc/nginx/conf.d/default.conf
 # Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
 
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
 RUN touch /var/run/nginx.pid && \
   chown -R nginx:nginx /var/run/nginx.pid && \

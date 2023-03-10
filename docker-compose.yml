@@ -8,16 +8,15 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    ports:
-      - "127.0.0.1:5432:5432"
     volumes:
       - ./.docker/postgres/iam:/var/lib/postgresql/data
 
   backend:
     build: ./backend
     ports:
-      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:30001:8080"
+
   frontend:
     build: ./frontend
     ports:
-      - "127.0.0.1:80:80"
+      - "127.0.0.1:30000:80"
