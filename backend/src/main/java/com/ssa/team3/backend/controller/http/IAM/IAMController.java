@@ -89,7 +89,7 @@ public class IAMController {
      * </ul>
      */
     private String createSessionCookie(String sessionId){
-        return "sessionId=" + sessionId + ";SameSite=None;Max-Age=86400;Secure;HttpOnly";
+        return "sessionId=" + sessionId + ";SameSite=None;Max-Age=86400;Secure;HttpOnly;Path=/";
     }
 
     private UserInfoResponse toUserInfoResponse(User user){

@@ -45,6 +45,6 @@ public class SecuredAfterRequest implements ContainerResponseFilter {
      * Extends the duration of the cookie by 24h
      */
     private String extendCookieDuration(Cookie cookie){
-        return cookie.getName() + "=" + cookie.getValue() + ";SameSite=None;Max-Age=86400;Secure;HttpOnly";
+        return cookie.getName() + "=" + cookie.getValue() + ";SameSite=None;Max-Age=86400;Secure;HttpOnly;Path=/";
     }
 }
