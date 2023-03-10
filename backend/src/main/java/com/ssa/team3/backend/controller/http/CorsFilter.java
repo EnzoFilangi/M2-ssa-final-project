@@ -12,9 +12,14 @@ public class CorsFilter implements ContainerResponseFilter {
     // From : https://www.baeldung.com/cors-in-jax-rs
     @Override
     public void filter(ContainerRequestContext requestContext,
-                       ContainerResponseContext responseContext) throws IOException {
+                       ContainerResponseContext responseContext) {
+        String allowedOrigin = System.getenv("ALLOW_ORIGIN");
+        if (allowedOrigin == null){
+            allowedOrigin = "*";
+        }
+
         responseContext.getHeaders().add(
-                "Access-Control-Allow-Origin", "https://de13-88-166-119-227.eu.ngrok.io");
+                "Access-Control-Allow-Origin", allowedOrigin);
         responseContext.getHeaders().add(
                 "Access-Control-Allow-Credentials", "true");
         responseContext.getHeaders().add(

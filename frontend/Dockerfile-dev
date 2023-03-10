@@ -1,6 +1,6 @@
 FROM node:18-alpine AS build
 
-ENV VITE_API_URL=https://ap.enzofilangi.fr/ap-backend/api
+ENV VITE_API_URL=http://localhost:30001/ap-backend/api
 
 WORKDIR /app
 COPY . .
