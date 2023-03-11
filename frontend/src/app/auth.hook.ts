@@ -14,8 +14,8 @@ export function useAuthHook() {
 
     }, []);
 
-    const login = useCallback(async ({username, password}: { username: string, password: string }) => {
-        await fetch(`${apiUrl}/authentication/session`, {
+    const login = useCallback( ({username, password}: { username: string, password: string }) => {
+        return fetch(`${apiUrl}/authentication/session`, {
             method: 'POST',
             body: JSON.stringify({username, password}),
             credentials: 'include',
