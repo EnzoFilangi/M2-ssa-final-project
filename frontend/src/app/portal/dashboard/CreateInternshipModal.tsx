@@ -1,6 +1,6 @@
 import Modal from "react-bootstrap/Modal";
 import {useMemo, useRef, useState} from "react";
-import {Internship, NewInternship} from "../../interfaces";
+import {NewInternship} from "../../interfaces";
 
 
 interface AddUserModalProps {
@@ -35,32 +35,32 @@ export function AddInternshipModal({hideModal, addInternship, studentId}: AddUse
                 <div className="flex flex-col">
                     <label htmlFor="firstName">Nom de l'entreprise</label>
                     <input ref={companyNameInput} id="companyName" type="text" value={name}
-                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                            onChange={e => setName(e.target.value)}/>
                 </div>
                 <div className="flex flex-col">
                     <label htmlFor="lastName">Adresse de l'entreprise</label>
                     <input ref={addressInput} id="companyAdress" type="text" value={address}
-                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                            onChange={e => setAddress(e.target.value)}/>
                 </div>
                 <div className="flex flex-col">
                     <label htmlFor="group">Date de début</label>
                     <input ref={startDateInput} id="startDate" type="date" value={startDate}
-                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                            onChange={e => setStartDate(e.target.value)}/>
                 </div>
                 <div className="flex flex-col">
                     <label htmlFor="group">Date de fin</label>
                     <input ref={endDateInput} id="endDate" type="date" value={endDate}
-                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                            onChange={e => setEndDate(e.target.value)}/>
                 </div>
 
             </Modal.Body>
             <Modal.Footer>
                 <button className="text-red-500 mr-5" onClick={hideModal}>Annuler</button>
-                <button disabled={disabled} onClick={handleAddInternship}>Créer</button>
+                <button disabled={disabled} onClick={handleAddInternship} className="enabled:text-blue-500">Créer</button>
             </Modal.Footer>
         </>
     )

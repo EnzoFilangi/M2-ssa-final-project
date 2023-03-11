@@ -38,13 +38,13 @@ export function InternshipDetail({hideModal, editCompany, company, deleteInterns
                 <div className="flex flex-col">
                     <label htmlFor="firstName">Nom de l'entreprise</label>
                     <input ref={companyNameInput} id="companyName" type="text" value={name}
-                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                            onChange={e => setName(e.target.value)}/>
                 </div>
                 <div className="flex flex-col">
                     <label htmlFor="lastName">Adresse de l'entreprise</label>
                     <input ref={addressInput} id="companyAdress" type="text" value={address}
-                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                            onChange={e => setAddress(e.target.value)}/>
                 </div>
 
@@ -52,7 +52,7 @@ export function InternshipDetail({hideModal, editCompany, company, deleteInterns
             <Modal.Footer>
                 <button className="text-red-500 mr-5" onClick={hideModal}>Annuler</button>
                 <button className="text-red-500 mr-5" onClick={handleDeleteInternship}>Supprimer le stage</button>
-                <button disabled={disabled} onClick={handleEditCompany}>Sauvegarder</button>
+                <button className="enabled:text-blue-500" disabled={disabled} onClick={handleEditCompany}>Sauvegarder</button>
             </Modal.Footer>
         </>
     )
