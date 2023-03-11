@@ -41,15 +41,15 @@ export function Dashboard() {
     const [searchCriteria, setSearchCriteria] = useState<string>('');
     useEffect(() => {
         setDisplayedStudents(students.filter(student =>
-            student.firstName.includes(searchCriteria)
-            || student.lastName.includes(searchCriteria)
-            || student.group.includes(searchCriteria)
-            || student.internship?.company.name.includes(searchCriteria)
+            student.firstName.toLowerCase().includes(searchCriteria)
+            || student.lastName.toLowerCase().includes(searchCriteria)
+            || student.group.toLowerCase().includes(searchCriteria)
+            || student.internship?.company.name.toLowerCase().includes(searchCriteria)
         ))
     })
 
     const handleSearchAction = (elem: ChangeEvent<HTMLInputElement>) => {
-        setSearchCriteria(elem.target.value);
+        setSearchCriteria(elem.target.value.toLowerCase());
     }
 
     return (
