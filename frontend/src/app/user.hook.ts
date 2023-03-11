@@ -179,34 +179,38 @@ export function useUser() {
     }
 
     const deleteInternship = async (internshipId: string) => {
-        const response = await fetch(`${apiUrl}/internships/${internshipId}`, {
-            credentials: "include",
-            method: "DELETE",
-            mode: "cors"
-        })
-        if (response.status === 204) {
-            setStudents((students) => {
-                const newStudents = [...students];
-                const studentIndex = newStudents.findIndex((student) => student.internship?.id === internshipId);
-                newStudents[studentIndex] = {...newStudents[studentIndex], internship: undefined};
-                return newStudents;
+        if (confirm("Cette action est irréversible, voulez-vous vraiment supprimer ce stage ?")){
+            const response = await fetch(`${apiUrl}/internships/${internshipId}`, {
+                credentials: "include",
+                method: "DELETE",
+                mode: "cors"
             })
+            if (response.status === 204) {
+                setStudents((students) => {
+                    const newStudents = [...students];
+                    const studentIndex = newStudents.findIndex((student) => student.internship?.id === internshipId);
+                    newStudents[studentIndex] = {...newStudents[studentIndex], internship: undefined};
+                    return newStudents;
+                })
+            }
         }
     }
 
     const deleteStudent = async (studentId: string) => {
-        const response = await fetch(`${apiUrl}/students/${studentId}`, {
-            credentials: "include",
-            method: "DELETE",
-            mode: "cors"
-        })
-        if (response.status === 204) {
-            setStudents((students) => {
-                const newStudents = [...students];
-                const studentIndex = newStudents.findIndex((student) => student.id === studentId);
-                newStudents.splice(studentIndex, 1);
-                return newStudents;
+        if (confirm("Cette action est irréversible, voulez-vous vraiment supprimer cet étudiant ?")) {
+            const response = await fetch(`${apiUrl}/students/${studentId}`, {
+                credentials: "include",
+                method: "DELETE",
+                mode: "cors"
             })
+            if (response.status === 204) {
+                setStudents((students) => {
+                    const newStudents = [...students];
+                    const studentIndex = newStudents.findIndex((student) => student.id === studentId);
+                    newStudents.splice(studentIndex, 1);
+                    return newStudents;
+                })
+            }
         }
     }
 
