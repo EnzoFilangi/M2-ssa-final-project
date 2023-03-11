@@ -24,7 +24,7 @@ export function AddUserModal({hideModal, addStudent}: AddUserModalProps) {
 
     return (<>
             <Modal.Header>
-                <Modal.Title>Ajouter un utilisateur</Modal.Title>
+                <Modal.Title>Ajouter un étudiant</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className="flex flex-col">

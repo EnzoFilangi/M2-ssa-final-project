@@ -29,7 +29,7 @@ export function AddInternshipModal({hideModal, addInternship, studentId}: AddUse
 
     return (<>
             <Modal.Header>
-                <Modal.Title>Ajouter un utilisateur</Modal.Title>
+                <Modal.Title>Créer un stage</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className="flex flex-col">
