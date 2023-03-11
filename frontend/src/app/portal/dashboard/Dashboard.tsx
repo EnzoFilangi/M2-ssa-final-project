@@ -1,6 +1,6 @@
-import {Company, Internship, Student, User} from "../../interfaces";
+import {Company, Internship, Student} from "../../interfaces";
 import {useUser} from "../../user.hook";
-import {useCallback, useEffect, useState} from "react";
+import {ChangeEvent, useCallback, useEffect, useState} from "react";
 import Modal from 'react-bootstrap/Modal';
 import {AddUserModal} from "./AddUserModal";
 import {AddInternshipModal} from "./CreateInternshipModal";
@@ -37,10 +37,29 @@ export function Dashboard() {
         setShowShowInternshipDetail(true)
     }
 
+    const [displayedStudents, setDisplayedStudents] = useState<Student[]>([]);
+    const [searchCriteria, setSearchCriteria] = useState<string>('');
+    useEffect(() => {
+        setDisplayedStudents(students.filter(student =>
+            student.firstName.includes(searchCriteria)
+            || student.lastName.includes(searchCriteria)
+            || student.group.includes(searchCriteria)
+            || student.internship?.company.name.includes(searchCriteria)
+        ))
+    })
+
+    const handleSearchAction = (elem: ChangeEvent<HTMLInputElement>) => {
+        setSearchCriteria(elem.target.value);
+    }
+
     return (
         <>
             <div className="flex justify-center mt-10 flex-col items-center">
                 <div className="overflow-auto w-[80%]">
+                    <div className="flex flex-row gap-3">
+                        <label htmlFor="search">Rechercher un étudiant : </label>
+                        <input name="search" className="bg-gray-50 text border border-gray-300" type={"text"} onChange={handleSearchAction}></input>
+                    </div>
                     <table className="table-auto overflow-scroll w-[200%]">
                         <thead>
                         <tr className="text-left border-b border-gray-300 p-5">
@@ -64,7 +83,7 @@ export function Dashboard() {
                         </tr>
                         </thead>
                         <tbody>
-                        {students.map((student, index) => (
+                        {displayedStudents.map((student, index) => (
                                 <tr key={student.id} className="border-b border-gray-300 p-5">
                                     <td className="px-5">
                                         {
