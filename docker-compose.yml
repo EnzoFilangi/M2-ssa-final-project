@@ -15,7 +15,6 @@ services:
     build:
       context: ./backend
       dockerfile: ./Dockerfile
-    image: enzofilangi/ap-backend
     ports:
       - "127.0.0.1:30001:8080"
 
@@ -23,6 +22,5 @@ services:
     build:
       context: ./frontend
       dockerfile: ./Dockerfile
-    image: enzofilangi/ap-frontend
     ports:
       - "127.0.0.1:30000:80"
