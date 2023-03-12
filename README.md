@@ -6,6 +6,8 @@
 
 ## The project
 
+The repository can be found here: [https://github.com/EnzoFilangi/M2-ssa-final-project](https://github.com/EnzoFilangi/M2-ssa-final-project)
+
 The goal of this project is to build an app to track the internships of a group of students using JEE.
 
 We used React for the frontend, and Jax-RS for the backend.
