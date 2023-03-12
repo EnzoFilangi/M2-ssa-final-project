@@ -1,5 +1,5 @@
 ## <p align="center">Great Intern Follow-up Tool</p>
-### <p align="center">M2SE - Advanced programming</p>
+### <p align="center">M2SE - Advanced programming - Team 3</p>
 ##### <p align="center">Samuel BADER, Enzo FILANGI</p>
 
 ---
