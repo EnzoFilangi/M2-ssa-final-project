@@ -25,7 +25,7 @@ PostgreSQL will automatically restore a dev database from `base_dev_db.sql` at s
 
 ## Usage
 
-Here is a video that details the use of our website: 
+Here is a video that details the use of our website: https://www.youtube.com/watch?v=-0iU9iPCX6s
 
 You can also explore it by yourself. Here are some valid credentials:
 ```
